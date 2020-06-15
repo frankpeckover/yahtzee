@@ -1,0 +1,24 @@
+.score-guide {
+    margin-top: 5%;
+    color: white;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: minmax(120px, auto);
+    grid-template-rows: repeat(19, 35px);
+    align-items: center;
+    border-radius: 2%;
+    padding: 2%;
+}
+
+label {
+    text-align: right;
+    padding-right: 10%;
+}
+
+.title {
+    height: 25px;
+    text-align: center;
+    border: rgba(173, 216, 230, 0) 2px solid;
+}

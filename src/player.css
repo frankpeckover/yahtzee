@@ -1,0 +1,59 @@
+.player {
+    margin-right: 1%;
+    margin-top: 5%;
+    color: grey;
+}
+
+.scores {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(120px, auto);
+    grid-template-rows: repeat(19, 35px);
+    align-items: center;
+    background-color: rgba(40, 40, 43, 0.281);
+    border-radius: 2%;
+    padding: 2%;
+}
+
+p {
+    height: 35px;
+    position: relative;
+    top: 25%;
+}
+
+input[type=number] {
+    height: 35px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+
+input[type=checkbox] {   
+    height: 25px;
+    width: 25px;
+    border: 1px solid white;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.name-input {
+    text-align: center;
+    width: 80%;
+    height: 25px;
+    border: grey 2px solid;
+    color: white;
+    background: none;
+}
+
+.name-button {
+    width: 15%;
+    height: 25px;
+    background: none;
+    color: white;
+}

@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: black;
+}
+
+.title {
+    color: white;
+    text-align: center;
+}
+
+.score-board {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding-bottom: 3%;
+}
+
+.button-div {
+    margin: auto;
+    text-align: center;
+    width: 20%;
+    height: 35px;
+}
+
+.player-control {
+    height: 100%;
+    width: 50%;
+    background: none;
+    color: white;
+}
