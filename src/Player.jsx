@@ -1,5 +1,6 @@
 import React from 'react';
 import './player.css';
+import './App.css';
 
 export default class Player extends React.Component {
 	constructor(props) {
@@ -156,7 +157,7 @@ export default class Player extends React.Component {
 	render() {
 		return (
 			<div className="player">
-				<div style={({ display: 'flex' }, { height: '25px' }, { width: '100%' })}>
+				<div className="fill center name-input-div">
 					<input className="name-input" type="text" placeholder="Player name..." />
 					<button className="name-button">OK</button>
 				</div>
@@ -195,13 +196,13 @@ export default class Player extends React.Component {
 						min="0"
 						max="30"
 					/>
-					<p>
+					<p className="justify-left">
 						<strong>{this.state.topSubTotal}</strong>
 					</p>
-					<p>
+					<p className="justify-left">
 						<strong>{this.state.bonus[0] ? 'Bonus Achieved!' : 'Score too low'}</strong>
 					</p>
-					<p>
+					<p className="justify-left">
 						<strong>{this.state.topTotal}</strong>
 					</p>
 
@@ -221,9 +222,15 @@ export default class Player extends React.Component {
 						min="0"
 						max="30"
 					/>
-					<input type="checkbox" onChange={this.handleCheckbox} name="fullHouse" />
-					<input type="checkbox" onChange={this.handleCheckbox} name="shortStraight" />
-					<input type="checkbox" onChange={this.handleCheckbox} name="longStraight" />
+					<div className="fill justify-left">
+						<input type="checkbox" onChange={this.handleCheckbox} name="fullHouse" />
+					</div>
+					<div className="fill justify-left">
+						<input type="checkbox" onChange={this.handleCheckbox} name="shortStraight" />
+					</div>
+					<div className="fill justify-left">
+						<input type="checkbox" onChange={this.handleCheckbox} name="longStraight" />
+					</div>
 					<input
 						type="number"
 						onChange={this.handleChange}
@@ -232,12 +239,16 @@ export default class Player extends React.Component {
 						min="0"
 						max="30"
 					/>
-					<input type="checkbox" onChange={this.handleCheckbox} name="yahtzee" />
-					<input type="checkbox" onChange={this.handleCheckbox} name="yahtzeeBonus" />
-					<p>
+					<div className="fill justify-left">
+						<input type="checkbox" onChange={this.handleCheckbox} name="yahtzee" />
+					</div>
+					<div className="fill justify-left">
+						<input type="checkbox" onChange={this.handleCheckbox} name="yahtzeeBonus" />
+					</div>
+					<p className="justify-left">
 						<strong>{this.state.bottomTotal}</strong>
 					</p>
-					<p>
+					<p className="justify-left">
 						<strong>{this.state.grandTotal}</strong>
 					</p>
 				</div>

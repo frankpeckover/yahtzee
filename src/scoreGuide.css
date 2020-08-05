@@ -1,24 +1,20 @@
 .score-guide {
-    margin-top: 5%;
-    color: white;
+	display: grid;
+	height: 100%;
+	grid-template-rows: repeat(19, 1fr);
+	align-items: center;
+	white-space: nowrap;
+	margin-top: var(--name-input-height);
 }
 
-.list {
-    display: grid;
-    grid-template-columns: minmax(120px, auto);
-    grid-template-rows: repeat(19, 35px);
-    align-items: center;
-    border-radius: 2%;
-    padding: 2%;
+.score-guide > * {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 }
 
 label {
-    text-align: right;
-    padding-right: 10%;
-}
-
-.title {
-    height: 25px;
-    text-align: center;
-    border: rgba(173, 216, 230, 0) 2px solid;
+	padding-right: 10%;
+	height: 35px;
+	color: var(--colour-text);
 }
