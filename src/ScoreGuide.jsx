@@ -13,13 +13,13 @@ export default class ScoreGuide extends React.Component {
 				<label>Fives</label>
 				<label>Sixes</label>
 				<label>
-					<strong>SUB TOTAL</strong>
+					<strong>TOP SUB TOTAL</strong>
 				</label>
 				<label>
 					<strong>BONUS</strong>
 				</label>
 				<label>
-					<strong>TOTAL</strong>
+					<strong>TOP TOTAL</strong>
 				</label>
 
 				<label>3 of a kind</label>
@@ -31,7 +31,7 @@ export default class ScoreGuide extends React.Component {
 				<label>Yahtzee</label>
 				<label>Yahtzee Bonus</label>
 				<label>
-					<strong>TOTAL</strong>
+					<strong>BOTTOM TOTAL</strong>
 				</label>
 				<label>
 					<strong>GRAND TOTAL</strong>

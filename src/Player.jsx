@@ -44,9 +44,9 @@ export default class Player extends React.Component {
 			topSubTotal: 0,
 			topTotal: 0,
 			bottomTotal: 0,
-			grandTotal: 0
+			grandTotal: 0,
+			nameSubmit: false
 		};
-		console.log(this.state);
 	}
 
 	handleChange = (event) => {
@@ -154,12 +154,37 @@ export default class Player extends React.Component {
 		});
 	};
 
+	handleTextChange = (event) => {
+		this.setState({ playerName: event.target.value });
+	};
+
+	toggleNameChange = () => {
+		this.setState({
+			nameSubmit: !this.state.nameSubmit
+		});
+	};
+
 	render() {
 		return (
 			<div className="player">
-				<div className="fill center name-input-div">
-					<input className="name-input" type="text" placeholder="Player name..." />
-					<button className="name-button">OK</button>
+				<div id="nameField" className="fill center name-input-div">
+					{this.state.nameSubmit ? (
+						<h2 style={{ paddingBottom: '1%' }} onClick={this.toggleNameChange}>
+							{this.state.playerName.toUpperCase()}
+						</h2>
+					) : (
+						<div className="fill center">
+							<input
+								onChange={this.handleTextChange}
+								className="name-input"
+								type="text"
+								placeholder="Player name..."
+							/>
+							<button onClick={this.toggleNameChange} className="name-button">
+								OK
+							</button>
+						</div>
+					)}
 				</div>
 				<div className="scores">
 					<input type="number" onChange={this.handleChange} name="ones" placeholder="Ones" min="0" max="5" />
@@ -202,7 +227,7 @@ export default class Player extends React.Component {
 					<p className="justify-left">
 						<strong>{this.state.bonus[0] ? 'Bonus Achieved!' : 'Score too low'}</strong>
 					</p>
-					<p className="justify-left">
+					<p className="justify-left" style={{ borderBottom: '2px solid var(--colour-primary)' }}>
 						<strong>{this.state.topTotal}</strong>
 					</p>
 
