@@ -1,6 +1,6 @@
 import React from 'react';
 import './scoreGuide.css';
-import './App.css';
+import './app.css';
 
 export default class ScoreGuide extends React.Component {
 	render() {

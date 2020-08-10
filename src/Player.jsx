@@ -1,6 +1,6 @@
 import React from 'react';
 import './player.css';
-import './App.css';
+import './app.css';
 
 export default class Player extends React.Component {
 	constructor(props) {
@@ -76,7 +76,6 @@ export default class Player extends React.Component {
 			},
 			this.topSubTotal
 		);
-		console.log(this.state);
 	};
 
 	topSubTotal = () => {
