@@ -36,6 +36,11 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div>
+				<div className="blocker center">
+					<p style={{ color: 'white' }} className="fill center">
+						Error 404: Mobile Display Not Found
+					</p>
+				</div>
 				<div className="title">
 					<h1>Yahtzee Score Sheet</h1>
 				</div>

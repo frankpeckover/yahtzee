@@ -99,6 +99,7 @@ export default class DieContainer extends React.Component {
 		return (
 			<div>
 				<div className="fill center">
+					{this.state.dieView}
 					<Die
 						key={0}
 						identifier={0}
