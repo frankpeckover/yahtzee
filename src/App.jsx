@@ -44,6 +44,9 @@ export default class App extends React.Component {
 						Error 404: Mobile Display Not Found
 					</p>
 				</div>
+				<div className="nav">
+					<a href="" />
+				</div>
 				<div className="title">
 					<h1>Yahtzee Score Sheet</h1>
 				</div>

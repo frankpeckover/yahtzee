@@ -164,6 +164,9 @@ export default class Player extends React.Component {
 	};
 
 	toggleNameChange = () => {
+		if (this.state.playerName === '') {
+			return;
+		}
 		this.setState({
 			nameSubmit: !this.state.nameSubmit
 		});
@@ -241,7 +244,9 @@ export default class Player extends React.Component {
 						max="30"
 					/>
 					<p className="justify-left">{this.state.topSubTotal}</p>
-					<p className="justify-left">{this.state.bonus[0] ? 'Bonus Achieved!' : 'Score too low'}</p>
+					<p className="justify-left">
+						{this.state.bonus[0] ? 'Bonus Achieved!' : `Score too low (${63 - this.state.topSubTotal}) `}
+					</p>
 					<p className="justify-left" style={{ borderBottom: '2px solid var(--colour-primary)' }}>
 						{this.state.topTotal}
 					</p>
