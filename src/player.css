@@ -33,14 +33,14 @@ input[type=number] {
 	color: var(--colour-text);
 
 	background-image: linear-gradient(var(--colour-accent), var(--colour-accent));
-	background-size: 0 1px;
+	background-size: 0 2px;
 	background-position: bottom left;
 	background-repeat: no-repeat;
-	transition: all 500ms;
+	transition: background-size 500ms;
 }
 
 input[type=number]:focus {
-	background-size: 100% 1px;
+	background-size: 100% 2px;
 }
 
 input[type=number]:focus::placeholder {
