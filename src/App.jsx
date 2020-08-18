@@ -3,6 +3,8 @@ import './app.css';
 import Player from './Player';
 import ScoreGuide from './ScoreGuide';
 import DieContainer from './DieContainer.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class App extends React.Component {
 	constructor() {
@@ -47,14 +49,14 @@ export default class App extends React.Component {
 				<div className="fill align-top" style={{ padding: '1%' }}>
 					<ScoreGuide />
 					{this.state.players}
-				</div>
-				<div className="fill center" style={{ padding: '1%' }}>
-					<button className="player-control-button" onClick={this.addPlayer}>
-						Add Player
-					</button>
-					<button className="player-control-button" onClick={this.removePlayer}>
-						Remove Player
-					</button>
+					<div className="column player-buttons" style={{ padding: '1%' }}>
+						<button className="player-control-button" onClick={this.addPlayer}>
+							<FontAwesomeIcon icon={faPlus} />
+						</button>
+						<button className="player-control-button" onClick={this.removePlayer}>
+							<FontAwesomeIcon icon={faMinus} />
+						</button>
+					</div>
 				</div>
 				<div className="dice fill center">
 					<DieContainer />

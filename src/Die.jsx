@@ -5,7 +5,7 @@ const Die = (props) => (
 	<div
 		id={props.identifier}
 		onClick={props.toggleRoll}
-		style={props.roll ? { border: '1px solid black' } : { border: '2px solid red' }}
+		style={props.roll ? { border: '1px solid var(--colour-primary)' } : { border: '2px solid red' }}
 		className="die"
 	>
 		<p className="center fill">{props.value}</p>

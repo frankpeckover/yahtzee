@@ -49,23 +49,28 @@ export default class Player extends React.Component {
 		};
 	}
 
-	handleChange = (event) => {
-		if (event.target.value === '' || event.target.value === null) {
-			this.setState(
-				{
-					[event.target.name]: 0
-				},
-				this.topSubTotal
-			);
+	handleValueChange = (event) => {
+		let target = event.target;
+		let num = 0;
+		if (target.value === '' || target.value === null) {
+			num = 0;
 		} else {
-			this.setState(
-				{
-					[event.target.name]: parseInt(event.target.value)
-				},
-				this.topSubTotal
-			);
+			num = Math.min(Math.max(parseInt(target.value), 0), parseInt(target.max));
 		}
+		this.setState(
+			{
+				[target.name]: num
+			},
+			() => {
+				this.topSubTotal();
+				this.editElement(target);
+			}
+		);
 	};
+
+	editElement(target) {
+		target.style.backgroundSize = `${this.state[target.name] / parseInt(target.max) * 100}% 1%`;
+	}
 
 	handleCheckbox = (event) => {
 		const newArray = this.state[event.target.name];
@@ -186,11 +191,25 @@ export default class Player extends React.Component {
 					)}
 				</div>
 				<div className="scores">
-					<input type="number" onChange={this.handleChange} name="ones" placeholder="Ones" min="0" max="5" />
-					<input type="number" onChange={this.handleChange} name="twos" placeholder="Twos" min="0" max="10" />
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
+						name="ones"
+						placeholder="Ones"
+						min="0"
+						max="5"
+					/>
+					<input
+						type="number"
+						onChange={this.handleValueChange}
+						name="twos"
+						placeholder="Twos"
+						min="0"
+						max="10"
+					/>
+					<input
+						type="number"
+						onChange={this.handleValueChange}
 						name="threes"
 						placeholder="Threes"
 						min="0"
@@ -198,7 +217,7 @@ export default class Player extends React.Component {
 					/>
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
 						name="fours"
 						placeholder="Fours"
 						min="0"
@@ -206,7 +225,7 @@ export default class Player extends React.Component {
 					/>
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
 						name="fives"
 						placeholder="Fives"
 						min="0"
@@ -214,25 +233,21 @@ export default class Player extends React.Component {
 					/>
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
 						name="sixes"
 						placeholder="Sixes"
 						min="0"
 						max="30"
 					/>
-					<p className="justify-left">
-						<strong>{this.state.topSubTotal}</strong>
-					</p>
-					<p className="justify-left">
-						<strong>{this.state.bonus[0] ? 'Bonus Achieved!' : 'Score too low'}</strong>
-					</p>
+					<p className="justify-left">{this.state.topSubTotal}</p>
+					<p className="justify-left">{this.state.bonus[0] ? 'Bonus Achieved!' : 'Score too low'}</p>
 					<p className="justify-left" style={{ borderBottom: '2px solid var(--colour-primary)' }}>
-						<strong>{this.state.topTotal}</strong>
+						{this.state.topTotal}
 					</p>
 
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
 						name="threeKind"
 						placeholder="3 of a kind"
 						min="0"
@@ -240,7 +255,7 @@ export default class Player extends React.Component {
 					/>
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
 						name="fourKind"
 						placeholder="4 of a kind"
 						min="0"
@@ -257,7 +272,7 @@ export default class Player extends React.Component {
 					</div>
 					<input
 						type="number"
-						onChange={this.handleChange}
+						onChange={this.handleValueChange}
 						name="chance"
 						placeholder="Chance"
 						min="0"
@@ -269,12 +284,8 @@ export default class Player extends React.Component {
 					<div className="fill justify-left">
 						<input type="checkbox" onChange={this.handleCheckbox} name="yahtzeeBonus" />
 					</div>
-					<p className="justify-left">
-						<strong>{this.state.bottomTotal}</strong>
-					</p>
-					<p className="justify-left">
-						<strong>{this.state.grandTotal}</strong>
-					</p>
+					<p className="justify-left">{this.state.bottomTotal}</p>
+					<p className="justify-left">{this.state.grandTotal}</p>
 				</div>
 			</div>
 		);
