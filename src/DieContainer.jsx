@@ -135,7 +135,7 @@ export default class DieContainer extends React.Component {
 						value={this.state.die[4][1]}
 					/>
 				</div>
-				<button className="fill center" onClick={this.roll}>
+				<button style={{ height: '30px' }} className="fill center" onClick={this.roll}>
 					Roll
 				</button>
 				<div className="fill center">
@@ -146,7 +146,7 @@ export default class DieContainer extends React.Component {
 						Roll Num: {this.state.rollNum}
 					</p>
 				</div>
-				<button className="fill center" onClick={this.clearToggles}>
+				<button style={{ height: '30px' }} className="fill center" onClick={this.clearToggles}>
 					Clear
 				</button>
 			</div>

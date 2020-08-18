@@ -5,6 +5,7 @@ import ScoreGuide from './ScoreGuide';
 import DieContainer from './DieContainer.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import './index.js';
 
 export default class App extends React.Component {
 	constructor() {
@@ -58,7 +59,10 @@ export default class App extends React.Component {
 						</button>
 					</div>
 				</div>
-				<div className="dice fill center">
+				<div id="dice" className="dice column">
+					<div style={{ margin: '1%' }} className="head">
+						<p className="center">Drag Me</p>
+					</div>
 					<DieContainer />
 				</div>
 			</div>
