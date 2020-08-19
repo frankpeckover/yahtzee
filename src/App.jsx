@@ -39,6 +39,7 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div>
+				<div id="starHolder" />
 				<div className="blocker center">
 					<p style={{ color: 'white' }} className="fill center">
 						Error 404: Mobile Display Not Found

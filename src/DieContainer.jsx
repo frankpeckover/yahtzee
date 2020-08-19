@@ -76,13 +76,15 @@ export default class DieContainer extends React.Component {
 	};
 
 	incrementRolls = () => {
-		if (this.state.rollNum > this.state.maxRolls - 1) {
-			this.setState({
-				rollNum: 1
-			});
+		let num = this.state.rollNum;
+		if (num > this.state.maxRolls - 1) {
+			num = 1;
 		} else {
-			this.setState({ rollNum: this.state.rollNum + 1 });
+			num++;
 		}
+		this.setState({
+			rollNum: num
+		});
 	};
 
 	sumDie = () => {
