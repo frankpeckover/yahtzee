@@ -7,6 +7,18 @@
 	--name-input-height: 25px;
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--colour-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--colour-primary);
+}
+
 * {
 	margin: 0;
 	padding: 0;

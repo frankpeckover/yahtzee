@@ -54,7 +54,7 @@ export default class Footer extends React.Component {
 		if (this.state.creatingStars) {
 			setTimeout(() => {
 				this.createStar();
-			}, 500);
+			}, 300);
 		}
 	};
 
@@ -68,7 +68,7 @@ export default class Footer extends React.Component {
 				</button>
 				<p className="center">
 					<FontAwesomeIcon icon={faCopyright} />
-					Duplicity 2020
+					DUALITY 2020
 				</p>
 			</div>
 		);
