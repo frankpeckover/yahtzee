@@ -3,8 +3,7 @@
 	height: 100%;
 	min-width: 200px;
 	margin-right: 10px;
-
-	transition: all 1s;
+	z-index: 1;
 }
 
 .scores {

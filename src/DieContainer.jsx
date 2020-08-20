@@ -35,6 +35,46 @@ export default class DieContainer extends React.Component {
 		};
 	}
 
+	componentDidMount = () => {
+		this.draggable(document.getElementById('dice'));
+	};
+
+	draggable = (element) => {
+		var isMouseDown = false;
+
+		var mouseX;
+		var mouseY;
+
+		var elementX = 0;
+		var elementY = 0;
+
+		element.addEventListener('mousedown', onMouseDown);
+
+		function onMouseDown(event) {
+			mouseX = event.clientX;
+			mouseY = event.clientY;
+			isMouseDown = true;
+		}
+
+		element.addEventListener('mouseup', onMouseUp);
+
+		function onMouseUp(event) {
+			isMouseDown = false;
+			elementX = parseInt(element.style.left) || 0;
+			elementY = parseInt(element.style.top) || 0;
+		}
+
+		element.addEventListener('mousemove', onMouseMove);
+
+		function onMouseMove(event) {
+			if (!isMouseDown) return;
+			var deltaX = event.clientX - mouseX;
+			var deltaY = event.clientY - mouseY;
+			element.style.left = elementX + deltaX + 'px';
+			element.style.top = elementY + deltaY + 'px';
+		}
+	};
+
 	toggleRoll = (event) => {
 		var tempArr = this.state.die;
 		tempArr.forEach((e, i) => {

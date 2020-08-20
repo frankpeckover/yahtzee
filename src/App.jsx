@@ -5,7 +5,7 @@ import ScoreGuide from './ScoreGuide';
 import DieContainer from './DieContainer.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import './index.js';
+import Footer from './Footer';
 
 export default class App extends React.Component {
 	constructor() {
@@ -39,7 +39,6 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<div id="starHolder" />
 				<div className="blocker center">
 					<p style={{ color: 'white' }} className="fill center">
 						Error 404: Mobile Display Not Found
@@ -63,6 +62,7 @@ export default class App extends React.Component {
 						</button>
 					</div>
 				</div>
+				<Footer />
 				<div id="dice" className="dice column">
 					<div style={{ margin: '1%' }} className="head">
 						<p className="center">Drag Me</p>
