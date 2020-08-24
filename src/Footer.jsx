@@ -23,6 +23,9 @@ export default class Footer extends React.Component {
 
 	getRandomInsult = () => {
 		fetch(this.state.url).then((res) => {
+			this.setState({
+				insult: res.body.insult
+			});
 			console.log(res);
 		});
 	};

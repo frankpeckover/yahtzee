@@ -69,7 +69,6 @@ export default class Player extends React.Component {
 	};
 
 	editElement(target) {
-		console.log(target);
 		target.style.backgroundSize = `${this.state[target.name] / parseInt(target.max) * 100}% 1px`;
 	}
 
