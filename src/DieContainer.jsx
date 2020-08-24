@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.css';
+import './yahtzee.css';
 import Die from './Die.jsx';
 
 export default class DieContainer extends React.Component {

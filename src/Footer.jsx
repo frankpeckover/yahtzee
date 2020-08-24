@@ -1,6 +1,7 @@
 import React from 'react';
-import './app.css';
+import './yahtzee.css';
 import './footer.css';
+import './Rules.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCopyright } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,9 +15,17 @@ export default class Footer extends React.Component {
 				'#00ffa6'
 			],
 			creatingStars: false,
-			starHolder: null
+			starHolder: null,
+			insult: '',
+			url: 'https://evilinsult.com/generate_insult.php?lang=en&type=json'
 		};
 	}
+
+	getRandomInsult = () => {
+		fetch(this.state.url).then((res) => {
+			console.log(res);
+		});
+	};
 
 	componentDidMount = () => {
 		this.setState({
@@ -61,8 +70,6 @@ export default class Footer extends React.Component {
 	render() {
 		return (
 			<div className="footer fill column" id="starHolder">
-				<p className="center">-- Rules --</p>
-				<p className="center">Yahtzee is played in a similar manner to poker</p>
 				<button className="center" onClick={this.toggleStars}>
 					<FontAwesomeIcon icon={faStar} />
 				</button>

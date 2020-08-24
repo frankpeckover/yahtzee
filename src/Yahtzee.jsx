@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.css';
+import './yahtzee.css';
 import Player from './Player';
 import ScoreGuide from './ScoreGuide';
 import DieContainer from './DieContainer.jsx';
@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Footer from './Footer';
 
-export default class App extends React.Component {
+export default class Yahtzee extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -43,9 +43,6 @@ export default class App extends React.Component {
 					<p style={{ color: 'white' }} className="fill center">
 						Error 404: Mobile Display Not Found
 					</p>
-				</div>
-				<div className="nav">
-					<a href="" />
 				</div>
 				<div className="title">
 					<h1>Yahtzee Score Sheet</h1>

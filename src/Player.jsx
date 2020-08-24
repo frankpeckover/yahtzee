@@ -1,6 +1,6 @@
 import React from 'react';
 import './player.css';
-import './app.css';
+import './yahtzee.css';
 
 export default class Player extends React.Component {
 	constructor(props) {

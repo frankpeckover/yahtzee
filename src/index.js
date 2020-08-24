@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.jsx';
+import Yahtzee from './Yahtzee.jsx';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Yahtzee />, document.getElementById('root'));
