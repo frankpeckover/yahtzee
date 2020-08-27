@@ -14,12 +14,12 @@ var addScore = async (name, score, date) => {
 	await Scores.create({ name, score, date });
 };
 
-var getAllScores = async () => {
-	return await Scores.find({}).select('_id');
+var getAllScores = () => {
+	return Scores.find({});
 };
 
-var getScore = async (name) => {
-	return await Scores.find({ name: name }).select('name score');
+var getScore = async (username) => {
+	return await Scores.findOne({ name: username }).select('name score');
 };
 
 exports.ScoreModel = Scores;

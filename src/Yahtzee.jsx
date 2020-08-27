@@ -60,6 +60,13 @@ export default class Yahtzee extends React.Component {
 					</div>
 				</div>
 				<Footer />
+				<div>
+					<form action="/scores/add" method="POST">
+						<input value="John" id="username" name="username" type="text" />
+						<input value="100" id="score" name="score" type="number" />
+						<input type="submit" value="Submit" />
+					</form>
+				</div>
 				<div id="dice" className="dice column">
 					<div style={{ margin: '1%' }} className="head">
 						<p className="center">Drag Me</p>
