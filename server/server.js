@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const { wait } = require('@testing-library/react');
 
 const server = express();
 const PORT = process.env.PORT || 4000;
@@ -34,20 +35,20 @@ server.get('/mong', (req, res) => {
 
 var Score = require('./db.js').Scores;
 
-var addScore = require('./db.js').addScore;
-server.post('/scores/add', (req, res, next) => {
-	addScore(req.body.username, parseInt(req.body.score));
-	res.send('Success');
+var addDocument = require('./db.js').addDocument;
+server.post('/scores/add', async (req, res, next) => {
+	await addDocument(req.body.username, parseInt(req.body.score));
+	res.send(`Successfully added: ${req.body.username}`);
 });
 
-var getAllScores = require('./db.js').getAllScores;
-server.get('/scores/get', (req, res) => {
-	res.json(getAllScores());
+var getAllDocuments = require('./db.js').getAllDocuments;
+server.get('/scores/get', async (req, res) => {
+	res.json(await getAllDocuments());
 });
 
-var getScore = require('./db.js').getScore;
-server.get('/scores/get/:name', (req, res) => {
-	res.send(getScore(req.params.name));
+var getDocumentByUsername = require('./db.js').getDocumentByUsername;
+server.get('/scores/get/:name', async (req, res) => {
+	res.send(await getDocumentByUsername(req.params.name));
 });
 
 server.listen(PORT, () => {

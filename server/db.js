@@ -3,26 +3,47 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ScoreSchema = new Schema({
-	name: { type: String, trim: true, default: '', required: true },
-	score: { type: Number, default: 0, required: true },
-	date: { type: Date, default: '' }
+	username: { type: String, trim: true, default: '', required: true },
+	score: { type: Number, default: 0, required: true }
 });
 
-var Scores = mongoose.model('scores', ScoreSchema);
+const Score = mongoose.model('scores', ScoreSchema);
 
-var addScore = async (name, score, date) => {
-	await Scores.create({ name, score, date });
+const addDocument = (username, score) => {
+	Score.findOne({ name: username }) ? updateDocument(username, score) : Score.create({ name, score, date });
 };
 
-var getAllScores = () => {
-	return Scores.find({});
+const getAllDocuments = () => {
+	var tempArr = Score.find({}).select('name score');
+	return tempArr;
 };
 
-var getScore = async (username) => {
-	return await Scores.findOne({ name: username }).select('name score');
+const getDocumentByUsername = (username) => {
+	return Score.find({ name: username });
 };
 
-exports.ScoreModel = Scores;
-exports.addScore = addScore;
-exports.getAllScores = getAllScores;
-exports.getScore = getScore;
+const deleteDocument = (id) => {
+	Score.findById(id)
+		? Score.findByIdAndRemove(id)
+		: (err) => {
+				console.log(err);
+			};
+};
+
+const updateDocument = (username, score) => {};
+
+const clearDocuments = () => {
+	Score.find({}).forEach((a) => {
+		console.log(
+			a.forEach((e) => {
+				deleteDocument(e._id);
+			})
+		);
+	});
+};
+
+exports.ScoreModel = Score;
+exports.addDocument = addDocument;
+exports.getAllDocuments = getAllDocuments;
+exports.getDocumentByUsername = getDocumentByUsername;
+exports.clearDocuments = clearDocuments;
