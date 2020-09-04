@@ -14,21 +14,10 @@ export default class Footer extends React.Component {
 				'#00fbff',
 				'#00ffa6'
 			],
-			creatingStars: false,
-			starHolder: null,
-			insult: '',
-			url: 'https://evilinsult.com/generate_insult.php?lang=en&type=json'
+			creatingStars: true,
+			starHolder: null
 		};
 	}
-
-	getRandomInsult = () => {
-		fetch(this.state.url).then((res) => {
-			this.setState({
-				insult: res.body.insult
-			});
-			console.log(res);
-		});
-	};
 
 	componentDidMount = () => {
 		this.setState({
