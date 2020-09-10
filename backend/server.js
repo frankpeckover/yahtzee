@@ -31,17 +31,25 @@ server.get('/', (req, res) => {
 
 /* Routing for CRUD of database */
 server.post('/scores', (req, res) => {
-	let user = req.body.username;
-	let pass = req.body.password;
-	let s = req.body.score;
+	//let found = !Score.countDocuments({ username: req.body.username }, { limit: 1 });
+	if (true) {
+		let user = req.body.username;
+		let pass = req.body.password;
+		let s = req.body.score;
 
-	let newScore = new Score({ username: user, password: pass, score: s });
-	console.log(newScore);
+		let newScore = new Score({ username: user, password: pass, score: s });
+		console.log(newScore);
 
-	newScore
-		.save()
-		.then(() => res.send(`User ${user} with score ${s} added`))
-		.catch((err) => res.status(400).json(`Error: ${err}`));
+		newScore
+			.save()
+			.then(() => res.send(`User ${user} with score ${s} added`))
+			.catch((err) => res.status(400).json(`Error: ${err}`));
+	} else {
+		Score.find({ username: req.body.username }).then((score) => {
+			score.score = req.body.score;
+			score.save().then(() => res.send(`Successfully updated ${req.body.username} to ${req.body.score}`));
+		});
+	}
 });
 
 server.get('/scores', (req, res) => {
@@ -58,23 +66,6 @@ server.get('/scores/:id', (req, res) => {
 server.delete('/scores/:id', (req, res) => {
 	Score.findByIdAndDelete(req.params.id)
 		.then(() => res.send(`Successfully deleted ${req.params.id} from database`))
-		.catch((err) => res.send(`Error: ${err}`));
-});
-
-server.post('/scores/:id', (req, res) => {
-	Score.findById(req.params.id)
-		.then((score) => {
-			if (req.body.password === score.password) {
-				score.score = req.body.score;
-
-				score
-					.save()
-					.then(() => res.send(`Successfully updated ${score.username} to ${req.body.score}`))
-					.catch((err) => res.send(`Error: ${err}`));
-			} else {
-				res.send(`Wrong password`);
-			}
-		})
 		.catch((err) => res.send(`Error: ${err}`));
 });
 
