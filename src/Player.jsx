@@ -180,6 +180,23 @@ export default class Player extends React.Component {
 		});
 	};
 
+	submitForm = () => {
+		var URL = '/scores';
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', URL);
+		xhr.onload = () => {
+			console.log(xhr.responseText);
+		};
+
+		xhr.onerror = (err) => {
+			console.log(`Error: ${err}`);
+		};
+
+		console.log(new FormData(document.getElementById('scoreForm')));
+
+		xhr.send();
+	};
+
 	render() {
 		return (
 			<div className="player">
@@ -302,13 +319,11 @@ export default class Player extends React.Component {
 					<p className="justify-left">{this.state.grandTotal}</p>
 					{this.state.scoreForm ? (
 						<div className="score-form fill center">
-							<form action="/scores" method="post">
+							<form id="scoreForm">
 								<input name="username" id="username" type="text" placeholder="Username.." />
 								<input name="password" id="password" type="password" placeholder="Password.." />
 								<input name="score" type="text" value={this.state.grandTotal} readOnly />
-								<button type="submit" value="Submit">
-									Submit
-								</button>
+								<button onClick={this.submitForm}>Submit</button>
 							</form>
 						</div>
 					) : null}

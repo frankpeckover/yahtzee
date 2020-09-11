@@ -15,7 +15,9 @@ export default class Footer extends React.Component {
 				'#00ffa6'
 			],
 			creatingStars: true,
-			starHolder: null
+			starHolder: null,
+			scoresToShow: 10,
+			scores: []
 		};
 	}
 
@@ -23,6 +25,7 @@ export default class Footer extends React.Component {
 		this.setState({
 			starHolder: document.getElementById('starHolder')
 		});
+		this.getScores();
 	};
 
 	toggleStars = () => {
@@ -32,6 +35,40 @@ export default class Footer extends React.Component {
 			},
 			this.createStar
 		);
+	};
+
+	getScores = () => {
+		const URL = '/scores';
+		fetch(URL)
+			.then((response) => response.json())
+			.then((data) => {
+				this.setState({ scores: this.bubbleSort(data) });
+			})
+			.catch((err) => console.log(`Cannot connect because: ${err}`));
+	};
+
+	bubbleSort = (data) => {
+		let swapped = true;
+		while (swapped) {
+			swapped = false;
+			for (let i = 1; i < data.length; i++) {
+				if (data[i].score > data[i - 1].score) {
+					swapped = true;
+					data = this.swap(data, i, i - 1);
+				}
+			}
+		}
+		return data;
+	};
+
+	swap = (array, indexOne, indexTwo) => {
+		let newArr = [
+			...array
+		];
+		let temp = newArr[indexOne];
+		newArr[indexOne] = newArr[indexTwo];
+		newArr[indexTwo] = temp;
+		return newArr;
 	};
 
 	createStar = () => {
@@ -61,13 +98,27 @@ export default class Footer extends React.Component {
 
 	render() {
 		return (
-			<div className="footer fill column" id="starHolder">
-				<button className="center" onClick={this.toggleStars}>
+			<div className="footer column">
+				<button id="starHolder" className="center" onClick={this.toggleStars}>
 					<FontAwesomeIcon icon={faStar} />
 				</button>
+				<div id="scores" className="column scores-data-container">
+					<h3>Player Scores</h3>
+					{this.state.scores.map((entry, i) => {
+						if (i < this.state.scoresToShow) {
+							return (
+								<div key={i} className="score-div fill">
+									<p>{entry.username}</p>
+									<p>:</p>
+									<p>{entry.score}</p>
+								</div>
+							);
+						}
+					})}
+				</div>
 				<p className="center">
 					<FontAwesomeIcon icon={faCopyright} />
-					DUALITY 2020
+					Website by Amalgam 2020. All rights reserved
 				</p>
 			</div>
 		);

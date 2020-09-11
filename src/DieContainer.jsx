@@ -37,6 +37,7 @@ export default class DieContainer extends React.Component {
 
 	componentDidMount = () => {
 		this.draggable(document.getElementById('dice'));
+		this.defaultState = this.state;
 	};
 
 	draggable = (element) => {
@@ -87,7 +88,7 @@ export default class DieContainer extends React.Component {
 		});
 	};
 
-	clearToggles = () => {
+	clear = () => {
 		var tempArr = this.state.die;
 		tempArr.forEach((e) => {
 			e[0] = true;
@@ -96,6 +97,37 @@ export default class DieContainer extends React.Component {
 		this.setState({
 			die: tempArr
 		});
+
+		this.setState({
+			rollNum: 0
+		});
+
+		this.setState({
+			die: [
+				[
+					true,
+					1
+				],
+				[
+					true,
+					1
+				],
+				[
+					true,
+					1
+				],
+				[
+					true,
+					1
+				],
+				[
+					true,
+					1
+				]
+			]
+		});
+
+		this.setState({ dieSum: 0 });
 	};
 
 	roll = () => {
@@ -109,7 +141,7 @@ export default class DieContainer extends React.Component {
 			die: tempArr
 		});
 		if (this.state.rollNum === this.state.maxRolls - 1) {
-			this.clearToggles();
+			this.clear();
 		}
 		this.incrementRolls();
 		this.sumDie();
@@ -188,7 +220,7 @@ export default class DieContainer extends React.Component {
 						Roll Num: {this.state.rollNum}
 					</p>
 				</div>
-				<button style={{ height: '30px' }} className="fill center" onClick={this.clearToggles}>
+				<button style={{ height: '30px' }} className="fill center" onClick={this.clear}>
 					Clear
 				</button>
 			</div>

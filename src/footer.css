@@ -1,8 +1,16 @@
 .footer {
-	margin-top: 20px;
-	bottom: 0;
-	height: 15%;
-	border-top: 1px solid var(--colour-secondary);
+	padding: 1% 0;
+	width: 100vw;
+	position: relative;
+}
+
+.footer::after {
+	position: absolute;
+	top: 0;
+	content: "";
+	width: 75%;
+	height: 1px;
+	background: var(--colour-accent);
 }
 
 .footer > p {
@@ -18,4 +26,34 @@
 	animation-name: riseAndDissapear;
 	animation-fill-mode: forwards;
 	animation-timing-function: linear;
+}
+
+.scores-data-container {
+	color: white;
+}
+
+.score-div {
+	display: grid;
+	grid-template-columns: 2fr 1fr 2fr;
+	grid-template-rows: 1fr;
+	column-gap: 5%;
+	border-bottom: 1px solid var(--colour-accent);
+	margin-bottom: 1%;
+}
+
+.score-div > p:nth-child(1) {
+	justify-content: flex-end;
+}
+
+.score-div > p:nth-child(2) {
+	justify-content: center;
+}
+
+.score-div > p:nth-child(3) {
+	justify-content: flex-start;
+}
+
+.score-div > p {
+	display: flex;
+	align-items: center;
 }
