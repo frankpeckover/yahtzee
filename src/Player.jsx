@@ -180,21 +180,24 @@ export default class Player extends React.Component {
 		});
 	};
 
-	submitForm = () => {
+	submitForm = (e) => {
+		e.preventDefault();
+		let form = new FormData(e.target);
+		let request = { username: form.get('username'), password: form.get('password'), score: form.get('score') };
+		console.log(request);
 		var URL = '/scores';
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', URL);
+		xhr.open('POST', URL, true);
 		xhr.onload = () => {
 			console.log(xhr.responseText);
 		};
 
 		xhr.onerror = (err) => {
-			console.log(`Error: ${err}`);
+			console.log(err);
 		};
 
-		console.log(new FormData(document.getElementById('scoreForm')));
-
-		xhr.send();
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(request));
 	};
 
 	render() {
@@ -298,7 +301,10 @@ export default class Player extends React.Component {
 					<div className="fill justify-left">
 						<input type="checkbox" onChange={this.handleCheckbox} name="shortStraight" />
 					</div>
-					<div className="fill justify-left">
+					<div
+						style={this.state.longStraight[0] ? { animation: 'pulse 500ms 5' } : null}
+						className="fill justify-left"
+					>
 						<input type="checkbox" onChange={this.handleCheckbox} name="longStraight" />
 					</div>
 					<input
@@ -309,7 +315,10 @@ export default class Player extends React.Component {
 						min="0"
 						max="30"
 					/>
-					<div className="fill justify-left">
+					<div
+						style={this.state.yahtzee[0] ? { animation: 'shake 500ms 5' } : null}
+						className="fill justify-left"
+					>
 						<input type="checkbox" onChange={this.handleCheckbox} name="yahtzee" />
 					</div>
 					<div className="fill justify-left">
@@ -319,11 +328,11 @@ export default class Player extends React.Component {
 					<p className="justify-left">{this.state.grandTotal}</p>
 					{this.state.scoreForm ? (
 						<div className="score-form fill center">
-							<form id="scoreForm">
+							<form id="scoreForm" onSubmit={(e) => this.submitForm(e)}>
 								<input name="username" id="username" type="text" placeholder="Username.." />
 								<input name="password" id="password" type="password" placeholder="Password.." />
 								<input name="score" type="text" value={this.state.grandTotal} readOnly />
-								<button onClick={this.submitForm}>Submit</button>
+								<button>Submit</button>
 							</form>
 						</div>
 					) : null}

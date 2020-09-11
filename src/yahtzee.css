@@ -1,3 +1,5 @@
+@import './animations.css';
+
 :root {
 	--colour-primary: #282828;
 	--colour-secondary: #6e6e6e;
@@ -39,6 +41,7 @@ a {
 
 body {
 	background: black;
+	overflow-x: hidden;
 }
 
 .center {
@@ -87,6 +90,10 @@ body {
 	text-align: center;
 	color: var(--colour-text);
 	padding: 1%;
+}
+
+.title:hover {
+	animation: shake 500ms infinite;
 }
 
 .player-buttons {

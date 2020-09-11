@@ -43,8 +43,8 @@ app.post('/scores', (req, res) => {
 
 				newScore
 					.save()
-					.then(() => res.send(`User ${user} with score ${s} added`))
-					.catch((err) => res.status(400).json(`Error: ${err}`));
+					.then(() => res.send(`Successfully added user: ${user} : ${s} to database`))
+					.catch((err) => res.json(err));
 			} else {
 				Score.findOne({ username: req.body.username }).then((score) => {
 					if (score.password === req.body.password) {
@@ -52,31 +52,31 @@ app.post('/scores', (req, res) => {
 						score
 							.save()
 							.then(() => res.send(`Successfully updated ${req.body.username} to ${req.body.score}`))
-							.catch((err) => res.send(`Error: ${err}`));
+							.catch((err) => res.send(err));
 					} else {
 						res.send(`Incorrect password for ${score.username}`);
 					}
 				});
 			}
 		})
-		.catch((err) => res.send(`Error: ${err}`));
+		.catch((err) => res.send(err));
 });
 
 app.get('/scores', (req, res) => {
-	Score.find({}).select('username score').then((score) => res.json(score)).catch((err) => res.send(`Error: ${err}`));
+	Score.find({}).select('username score').then((score) => res.json(score)).catch((err) => res.send(err));
 });
 
 app.get('/scores/:user', (req, res) => {
 	Score.findOne({ username: req.params.user })
 		.select('username score')
 		.then((score) => res.json(score))
-		.catch((err) => res.send(`Error: ${err}`));
+		.catch((err) => res.send(err));
 });
 
 app.delete('/scores/:id', (req, res) => {
 	Score.findByIdAndDelete(req.params.id)
 		.then(() => res.send(`Successfully deleted ${req.params.id} from database`))
-		.catch((err) => res.send(`Error: ${err}`));
+		.catch((err) => res.send(err));
 });
 
 /* Server listening */
