@@ -1,6 +1,8 @@
 import React from 'react';
 import './player.css';
 import './yahtzee.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArchive } from '@fortawesome/free-solid-svg-icons';
 
 export default class Player extends React.Component {
 	constructor(props) {
@@ -45,7 +47,8 @@ export default class Player extends React.Component {
 			topTotal: 0,
 			bottomTotal: 0,
 			grandTotal: 0,
-			nameSubmit: false
+			nameSubmit: false,
+			scoreForm: false
 		};
 	}
 
@@ -171,6 +174,12 @@ export default class Player extends React.Component {
 		});
 	};
 
+	toggleScoreForm = () => {
+		this.setState({
+			scoreForm: !this.state.scoreForm
+		});
+	};
+
 	render() {
 		return (
 			<div className="player">
@@ -291,6 +300,21 @@ export default class Player extends React.Component {
 					</div>
 					<p className="justify-left">{this.state.bottomTotal}</p>
 					<p className="justify-left">{this.state.grandTotal}</p>
+					{this.state.scoreForm ? (
+						<div className="score-form fill center">
+							<form action="/scores" method="post">
+								<input name="username" id="username" type="text" placeholder="Username.." />
+								<input name="password" id="password" type="password" placeholder="Password.." />
+								<input name="score" type="text" value={this.state.grandTotal} readOnly />
+								<button type="submit" value="Submit">
+									Submit
+								</button>
+							</form>
+						</div>
+					) : null}
+					<button className="score-form-button" onClick={this.toggleScoreForm}>
+						<FontAwesomeIcon icon={faArchive} />
+					</button>
 				</div>
 			</div>
 		);

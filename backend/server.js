@@ -31,33 +31,43 @@ server.get('/', (req, res) => {
 
 /* Routing for CRUD of database */
 server.post('/scores', (req, res) => {
-	//let found = !Score.countDocuments({ username: req.body.username }, { limit: 1 });
-	if (true) {
-		let user = req.body.username;
-		let pass = req.body.password;
-		let s = req.body.score;
+	Score.countDocuments({ username: req.body.username })
+		.then((number) => {
+			if (!number) {
+				//User does not exist and we can create one
+				let user = req.body.username;
+				let pass = req.body.password;
+				let s = req.body.score;
 
-		let newScore = new Score({ username: user, password: pass, score: s });
-		console.log(newScore);
+				let newScore = new Score({ username: user, password: pass, score: s });
 
-		newScore
-			.save()
-			.then(() => res.send(`User ${user} with score ${s} added`))
-			.catch((err) => res.status(400).json(`Error: ${err}`));
-	} else {
-		Score.find({ username: req.body.username }).then((score) => {
-			score.score = req.body.score;
-			score.save().then(() => res.send(`Successfully updated ${req.body.username} to ${req.body.score}`));
-		});
-	}
+				newScore
+					.save()
+					.then(() => res.send(`User ${user} with score ${s} added`))
+					.catch((err) => res.status(400).json(`Error: ${err}`));
+			} else {
+				Score.findOne({ username: req.body.username }).then((score) => {
+					if (score.password === req.body.password) {
+						score.score = req.body.score;
+						score
+							.save()
+							.then(() => res.send(`Successfully updated ${req.body.username} to ${req.body.score}`))
+							.catch((err) => res.send(`Error: ${err}`));
+					} else {
+						res.send(`Incorrect password for ${score.username}`);
+					}
+				});
+			}
+		})
+		.catch((err) => res.send(`Error: ${err}`));
 });
 
 server.get('/scores', (req, res) => {
 	Score.find({}).select('username score').then((score) => res.json(score)).catch((err) => res.send(`Error: ${err}`));
 });
 
-server.get('/scores/:id', (req, res) => {
-	Score.findById(req.params.id)
+server.get('/scores/:user', (req, res) => {
+	Score.findOne({ username: req.params.user })
 		.select('username score')
 		.then((score) => res.json(score))
 		.catch((err) => res.send(`Error: ${err}`));

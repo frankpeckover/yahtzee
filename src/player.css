@@ -12,6 +12,7 @@
 	grid-template-rows: repeat(19, 1fr);
 	align-items: center;
 	background-color: var(--colour-secondary);
+	position: relative;
 }
 
 input,
@@ -26,7 +27,7 @@ p {
 	color: var(--colour-primary);
 }
 
-input[type=number] {
+.scores > input[type=number] {
 	background: none;
 	border: none;
 	color: var(--colour-text);
@@ -38,15 +39,15 @@ input[type=number] {
 	transition: background-size 500ms;
 }
 
-input[type=number]:focus {
+.scores > input[type=number]:focus {
 	background-size: 100% 2px;
 }
 
-input[type=number]:focus::placeholder {
+.scores > input[type=number]:focus::placeholder {
 	color: var(--colour-text);
 }
 
-input[type=checkbox] {
+.scores > div > input[type=checkbox] {
 	height: 80%;
 	width: 25px;
 	margin-left: 5%;
@@ -82,4 +83,45 @@ input[type=number]::-webkit-outer-spin-button {
 	background: none;
 	border: 1px solid var(--colour-secondary);
 	color: var(--colour-text);
+}
+
+.score-form {
+	position: absolute;
+	background: var(--colour-secondary);
+	padding: 5%;
+}
+
+.score-form-button {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	transition: opacity 500ms;
+	width: 30px;
+	height: 30px;
+}
+
+.score-form-button:hover {
+	opacity: 1;
+}
+
+.score-form > form > input {
+	background: none;
+	border: none;
+	border-bottom: 1px solid black;
+	margin-bottom: 5%;
+}
+
+.score-form > form > input::placeholder {
+	color: black;
+}
+
+.score-form > form > button {
+	width: 100%;
+	border: none;
+	height: 1.3rem;
+}
+.score-form > form > button:hover {
+	background: greenyellow;
+	cursor: pointer;
 }
