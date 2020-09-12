@@ -12,7 +12,9 @@ export default class Yahtzee extends React.Component {
 		super();
 		this.state = {
 			players: [
-				<Player key={0} />
+				<Player key={0} />,
+				<Player key={1} />,
+				<Player key={2} />
 			]
 		};
 	}

@@ -4,6 +4,7 @@ import './footer.css';
 import './Rules.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCopyright } from '@fortawesome/free-solid-svg-icons';
+import Rules from './Rules.jsx';
 
 export default class Footer extends React.Component {
 	constructor() {
@@ -102,19 +103,24 @@ export default class Footer extends React.Component {
 				<button id="starHolder" className="center" onClick={this.toggleStars}>
 					<FontAwesomeIcon icon={faStar} />
 				</button>
-				<div id="scores" className="column scores-data-container">
-					<h3>Player Scores</h3>
-					{this.state.scores.map((entry, i) => {
-						if (i < this.state.scoresToShow) {
-							return (
-								<div key={i} className="score-div fill">
-									<p>{entry.username}</p>
-									<p>:</p>
-									<p>{entry.score}</p>
-								</div>
-							);
-						}
-					})}
+				<div className="score-rules-div">
+					<div id="scores" className="column scores-data-container">
+						<h3>Player Scores</h3>
+						{this.state.scores.map((entry, i) => {
+							if (i < this.state.scoresToShow) {
+								return (
+									<div key={i} className="score-div fill">
+										<p>{entry.username}</p>
+										<p>:</p>
+										<p>{entry.score}</p>
+									</div>
+								);
+							}
+						})}
+					</div>
+					<div style={{ textAlign: 'left', padding: '1%' }} className="center">
+						<Rules />
+					</div>
 				</div>
 				<p className="center">
 					<FontAwesomeIcon icon={faCopyright} />
