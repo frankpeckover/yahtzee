@@ -90,6 +90,17 @@ body {
 	text-align: center;
 	color: var(--colour-text);
 	padding: 1%;
+	position: relative;
+}
+
+.title::after {
+	position: absolute;
+	content: "";
+	width: 75%;
+	height: 1px;
+	background: var(--colour-accent);
+	bottom: 0;
+	transform: translateX(-50%);
 }
 
 .title:hover {
@@ -142,22 +153,25 @@ body {
 	display: none;
 	width: 100vw;
 	height: 100vh;
-	position: absolute;
 	z-index: 100;
 	background: var(--colour-primary);
+	position: absolute;
 }
 
-@keyframes riseAndDissapear {
-	0% {
-		transform: translateY(0px);
-	}
-	100% {
-		transform: translateY(-1000px);
-	}
+.blocker-text {
+	color: white;
+	font-size: 4rem;
+	position: absolute;
+	overflow: visible;
+	top: 50%;
+}
+
+.blocker-text:hover {
+	animation: shake 500ms 5;
 }
 
 @media screen and (max-width: 750px) {
-	body {
+	* {
 		overflow: hidden;
 	}
 
@@ -166,6 +180,8 @@ body {
 	}
 
 	.blocker {
-		display: block;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 }

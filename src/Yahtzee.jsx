@@ -41,10 +41,8 @@ export default class Yahtzee extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="blocker center">
-					<p style={{ color: 'white' }} className="fill center">
-						Error 404: Mobile Display Not Found
-					</p>
+				<div className="blocker">
+					<p className="blocker-text">Error 404: Mobile Display Not Found</p>
 				</div>
 				<div className="title">
 					<h1>Yahtzee Score Sheet</h1>

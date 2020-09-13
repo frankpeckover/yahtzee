@@ -28,11 +28,15 @@
 	animation-timing-function: linear;
 }
 
-.scores-data-container {
+.scores-div {
 	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
 }
 
-.score-div {
+.score-element {
 	display: grid;
 	grid-template-columns: 2fr 1fr 2fr;
 	grid-template-rows: 1fr;
@@ -41,19 +45,19 @@
 	margin-bottom: 1%;
 }
 
-.score-div > p:nth-child(1) {
+.score-element > p:nth-child(1) {
 	justify-content: flex-end;
 }
 
-.score-div > p:nth-child(2) {
+.score-element > p:nth-child(2) {
 	justify-content: center;
 }
 
-.score-div > p:nth-child(3) {
+.score-element > p:nth-child(3) {
 	justify-content: flex-start;
 }
 
-.score-div > p {
+.score-element > p {
 	display: flex;
 	align-items: center;
 }
@@ -61,7 +65,7 @@
 .score-rules-div {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr;
 	padding: 1%;
 	column-gap: 1%;
+	height: 25vh;
 }

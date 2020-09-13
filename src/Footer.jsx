@@ -104,12 +104,12 @@ export default class Footer extends React.Component {
 					<FontAwesomeIcon icon={faStar} />
 				</button>
 				<div className="score-rules-div">
-					<div id="scores" className="column scores-data-container">
-						<h3>Player Scores</h3>
+					<div id="scores" className="scores-div">
+						<h3 className="center">Player Scores</h3>
 						{this.state.scores.map((entry, i) => {
 							if (i < this.state.scoresToShow) {
 								return (
-									<div key={i} className="score-div fill">
+									<div key={i} className="score-element fill">
 										<p>{entry.username}</p>
 										<p>:</p>
 										<p>{entry.score}</p>
@@ -118,9 +118,7 @@ export default class Footer extends React.Component {
 							}
 						})}
 					</div>
-					<div style={{ textAlign: 'left', padding: '1%' }} className="center">
-						<Rules />
-					</div>
+					<Rules />
 				</div>
 				<p className="center">
 					<FontAwesomeIcon icon={faCopyright} />
