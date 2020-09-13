@@ -25,6 +25,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
 }
 
 *::selection {
@@ -104,7 +105,7 @@ body {
 }
 
 .title:hover {
-	animation: shake 500ms infinite;
+	animation: shake 1000ms infinite;
 }
 
 .player-buttons {

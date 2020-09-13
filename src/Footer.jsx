@@ -106,17 +106,23 @@ export default class Footer extends React.Component {
 				<div className="score-rules-div">
 					<div id="scores" className="scores-div">
 						<h3 className="center">Player Scores</h3>
-						{this.state.scores.map((entry, i) => {
-							if (i < this.state.scoresToShow) {
-								return (
-									<div key={i} className="score-element fill">
-										<p>{entry.username}</p>
-										<p>:</p>
-										<p>{entry.score}</p>
-									</div>
-								);
-							}
-						})}
+						{this.state.scores.length === 0 ? (
+							<p className="center" style={{ color: 'red', fontSize: '1.4rem' }}>
+								Unable to retreive scores from database
+							</p>
+						) : (
+							this.state.scores.map((entry, i) => {
+								if (i < this.state.scoresToShow) {
+									return (
+										<div key={i} className="score-element fill">
+											<p>{entry.username}</p>
+											<p>:</p>
+											<p>{entry.score}</p>
+										</div>
+									);
+								}
+							})
+						)}
 					</div>
 					<Rules />
 				</div>
