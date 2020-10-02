@@ -34,14 +34,14 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
+	width: 50%;
 }
 
 .score-element {
 	display: grid;
-	grid-template-columns: 2fr 1fr 2fr;
+	grid-template-columns: 4fr 1fr 4fr;
 	grid-template-rows: 1fr;
-	column-gap: 5%;
-	border-bottom: 1px solid var(--colour-accent);
+	column-gap: 1%;
 	margin-bottom: 1%;
 }
 
@@ -63,9 +63,8 @@
 }
 
 .score-rules-div {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+	display: flex;
+	flex-direction: row;
 	padding: 1%;
-	column-gap: 1%;
 	height: 30vh;
 }

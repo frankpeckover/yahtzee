@@ -6,28 +6,7 @@ export default class DieContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			die: [
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				]
-			],
+			die: [ [ true, 1 ], [ true, 1 ], [ true, 1 ], [ true, 1 ], [ true, 1 ] ],
 
 			dieSum: 0,
 			rollNum: 0,
@@ -103,28 +82,7 @@ export default class DieContainer extends React.Component {
 		});
 
 		this.setState({
-			die: [
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				],
-				[
-					true,
-					1
-				]
-			]
+			die: [ [ true, 1 ], [ true, 1 ], [ true, 1 ], [ true, 1 ], [ true, 1 ] ]
 		});
 
 		this.setState({ dieSum: 0 });
@@ -140,7 +98,7 @@ export default class DieContainer extends React.Component {
 		this.setState({
 			die: tempArr
 		});
-		if (this.state.rollNum === this.state.maxRolls - 1) {
+		if (this.state.rollNum === this.state.maxRolls) {
 			this.clear();
 		}
 		this.incrementRolls();
@@ -150,7 +108,7 @@ export default class DieContainer extends React.Component {
 	incrementRolls = () => {
 		let num = this.state.rollNum;
 		if (num > this.state.maxRolls - 1) {
-			num = 1;
+			num = 0;
 		} else {
 			num++;
 		}
