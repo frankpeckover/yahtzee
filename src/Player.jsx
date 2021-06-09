@@ -17,32 +17,14 @@ export default class Player extends React.Component {
 			sixes: 0,
 			threeKind: 0,
 			fourKind: 0,
-			fullHouse: [
-				false,
-				25
-			],
-			shortStraight: [
-				false,
-				30
-			],
-			longStraight: [
-				false,
-				40
-			],
+			fullHouse: [ false, 25 ],
+			shortStraight: [ false, 30 ],
+			longStraight: [ false, 40 ],
 			chance: 0,
-			yahtzee: [
-				false,
-				50
-			],
-			yahtzeeBonus: [
-				false,
-				100
-			],
+			yahtzee: [ false, 50 ],
+			yahtzeeBonus: [ false, 100 ],
 
-			bonus: [
-				false,
-				35
-			],
+			bonus: [ false, 35 ],
 			topSubTotal: 0,
 			topTotal: 0,
 			bottomTotal: 0,
@@ -116,20 +98,14 @@ export default class Player extends React.Component {
 		if (this.state.topSubTotal >= 63) {
 			this.setState(
 				{
-					bonus: [
-						true,
-						this.state.bonus[1]
-					]
+					bonus: [ true, this.state.bonus[1] ]
 				},
 				this.topTotal
 			);
 		} else {
 			this.setState(
 				{
-					bonus: [
-						false,
-						this.state.bonus[1]
-					]
+					bonus: [ false, this.state.bonus[1] ]
 				},
 				this.topTotal
 			);
@@ -200,6 +176,16 @@ export default class Player extends React.Component {
 		xhr.send(JSON.stringify(request));
 	};
 
+	handleDoubleClick = (event) => {
+		let target = event.target;
+		target.style.background = 'black';
+		target.disabled = true;
+
+		if (target.type == 'checkbox') {
+			target.style.opacity = '0';
+		}
+	};
+
 	render() {
 		return (
 			<div className="player">
@@ -224,6 +210,7 @@ export default class Player extends React.Component {
 				</div>
 				<div className="scores">
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="ones"
@@ -232,6 +219,7 @@ export default class Player extends React.Component {
 						max="5"
 					/>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="twos"
@@ -240,6 +228,7 @@ export default class Player extends React.Component {
 						max="10"
 					/>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="threes"
@@ -248,6 +237,7 @@ export default class Player extends React.Component {
 						max="15"
 					/>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="fours"
@@ -256,6 +246,7 @@ export default class Player extends React.Component {
 						max="20"
 					/>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="fives"
@@ -264,6 +255,7 @@ export default class Player extends React.Component {
 						max="25"
 					/>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="sixes"
@@ -280,6 +272,7 @@ export default class Player extends React.Component {
 					</p>
 
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="threeKind"
@@ -288,6 +281,7 @@ export default class Player extends React.Component {
 						max="30"
 					/>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="fourKind"
@@ -296,18 +290,34 @@ export default class Player extends React.Component {
 						max="30"
 					/>
 					<div className="fill justify-left">
-						<input type="checkbox" onChange={this.handleCheckbox} name="fullHouse" />
+						<input
+							onDoubleClick={this.handleDoubleClick}
+							type="checkbox"
+							onChange={this.handleCheckbox}
+							name="fullHouse"
+						/>
 					</div>
 					<div className="fill justify-left">
-						<input type="checkbox" onChange={this.handleCheckbox} name="shortStraight" />
+						<input
+							onDoubleClick={this.handleDoubleClick}
+							type="checkbox"
+							onChange={this.handleCheckbox}
+							name="shortStraight"
+						/>
 					</div>
 					<div
 						style={this.state.longStraight[0] ? { animation: 'pulse 500ms 5' } : null}
 						className="fill justify-left"
 					>
-						<input type="checkbox" onChange={this.handleCheckbox} name="longStraight" />
+						<input
+							onDoubleClick={this.handleDoubleClick}
+							type="checkbox"
+							onChange={this.handleCheckbox}
+							name="longStraight"
+						/>
 					</div>
 					<input
+						onDoubleClick={this.handleDoubleClick}
 						type="number"
 						onChange={this.handleValueChange}
 						name="chance"
@@ -319,10 +329,20 @@ export default class Player extends React.Component {
 						style={this.state.yahtzee[0] ? { animation: 'shake 500ms 5' } : null}
 						className="fill justify-left"
 					>
-						<input type="checkbox" onChange={this.handleCheckbox} name="yahtzee" />
+						<input
+							onDoubleClick={this.handleDoubleClick}
+							type="checkbox"
+							onChange={this.handleCheckbox}
+							name="yahtzee"
+						/>
 					</div>
 					<div className="fill justify-left">
-						<input type="checkbox" onChange={this.handleCheckbox} name="yahtzeeBonus" />
+						<input
+							onDoubleClick={this.handleDoubleClick}
+							type="checkbox"
+							onChange={this.handleCheckbox}
+							name="yahtzeeBonus"
+						/>
 					</div>
 					<p className="justify-left">{this.state.bottomTotal}</p>
 					<p className="justify-left">{this.state.grandTotal}</p>
