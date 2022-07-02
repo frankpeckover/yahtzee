@@ -25,10 +25,10 @@ connection.once('open', () => {
 */
 
 /* Server up files for the root directory */
-app.use('/', express.static(process.cwd() + '/../build'));
+app.use('/', express.static(__dirname + '/../build'));
 
 app.get('/', (req, res) => {
-	res.sendFile(path.resolve(process.cwd() + '/../public/index.html'));
+	res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
 
 /* Routing for CRUD of database */
