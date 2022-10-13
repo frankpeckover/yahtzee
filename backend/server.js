@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const Score = require('./models/score.model.js').ScoreModel;
 
 const app = express();
-const PORT = process.env.PORT || 8081;
+const PORT = 82;
 //const uri = 'mongodb+srv://Francis:M0nkeyman6797@cluster0.ibdt9.mongodb.net/database?retryWrites=true&w=majority';
 
 /* middleware */
