@@ -104,10 +104,6 @@ body {
 	transform: translateX(-50%);
 }
 
-.title:hover {
-	animation: shake 1000ms infinite;
-}
-
 .player-buttons {
 	opacity: 0;
 	height: 100%;

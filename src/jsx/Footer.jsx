@@ -1,10 +1,11 @@
 import React from 'react';
-import './yahtzee.css';
-import './footer.css';
+import '../styles/yahtzee.css';
+import '../styles/footer.css';
 import './Rules.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCopyright } from '@fortawesome/free-solid-svg-icons';
 import Rules from './Rules.jsx';
+import { HighScores } from './HighScores.jsx';
 
 export default class Footer extends React.Component {
 	constructor() {
@@ -41,11 +42,11 @@ export default class Footer extends React.Component {
 	getScores = () => {
 		const URL = '/scores';
 		fetch(URL)
-			.then((response) => response.json())
-			.then((data) => {
-				this.setState({ scores: this.bubbleSort(data) });
+			.then(response => response.json())
+			.then(data => { 
+				this.setState({ scores: this.bubbleSort(data) })
 			})
-			.catch((err) => console.log(`Cannot connect because: ${err}`));
+			.catch((err) => console.log(`Cannot connect because: ${err}`))
 	};
 
 	bubbleSort = (data) => {
@@ -53,7 +54,7 @@ export default class Footer extends React.Component {
 		while (swapped) {
 			swapped = false;
 			for (let i = 1; i < data.length; i++) {
-				if (data[i].score > data[i - 1].score) {
+				if (data[i].GrandTotal > data[i - 1].GrandTotal) {
 					swapped = true;
 					data = this.swap(data, i, i - 1);
 				}
@@ -111,17 +112,7 @@ export default class Footer extends React.Component {
 								Unable to retreive scores from database
 							</p>
 						) : (
-							this.state.scores.map((entry, i) => {
-								if (i < this.state.scoresToShow) {
-									return (
-										<div key={i} className="score-element fill">
-											<p>{entry.username}</p>
-											<p>:</p>
-											<p>{entry.score}</p>
-										</div>
-									);
-								}
-							})
+							<HighScores scores={this.state.scores} />
 						)}
 					</div>
 					<Rules />

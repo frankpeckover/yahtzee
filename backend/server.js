@@ -2,86 +2,77 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-//const mongoose = require('mongoose');
-const Score = require('./models/score.model.js').ScoreModel;
+const database = require('./database.js');
 
 const app = express();
 const PORT = 82;
-//const uri = 'mongodb+srv://Francis:M0nkeyman6797@cluster0.ibdt9.mongodb.net/database?retryWrites=true&w=majority';
 
 /* middleware */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-/* Connecting to the mongoose database */
-/*
-const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-mongoose.connect(uri, mongoOptions).catch((err) => console.log(`Error: ${err}`));
-const connection = mongoose.connection;
-connection.once('open', () => {
-	console.log('Successfully connected to mongoDB');
-});
-*/
-
-/* Server up files for the root directory */
 app.use('/', express.static(__dirname + '/../build'));
 
 app.get('/', (req, res) => {
 	res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
 
-/* Routing for CRUD of database */
-/*
-app.post('/scores', (req, res) => {
-	Score.countDocuments({ username: req.body.username })
-		.then((number) => {
-			if (!number) {
-				//User does not exist and we can create one
-				let user = req.body.username;
-				let pass = req.body.password;
-				let s = req.body.score;
+app.get('/scores', async (req, res) => {
+	//Grab the data from 
+	const pool = await database.poolPromise;
+	const result = await pool.query(`select * from scores`)
+	res.send(JSON.stringify(result.recordset))
+})
 
-				let newScore = new Score({ username: user, password: pass, score: s });
+app.post('/save-score', async (req, res) => {
+	try {
+		const pool = await database.poolPromise;
+		data = req.body
+		const datePlayed = new Date().toISOString();
 
-				newScore
-					.save()
-					.then(() => res.send(`Successfully added user: ${user} : ${s} to database`))
-					.catch((err) => res.json(err));
-			} else {
-				Score.findOne({ username: req.body.username }).then((score) => {
-					if (score.password === req.body.password) {
-						score.score = req.body.score;
-						score
-							.save()
-							.then(() => res.send(`Successfully updated ${req.body.username} to ${req.body.score}`))
-							.catch((err) => res.send(err));
-					} else {
-						res.send(`Incorrect password for ${score.username}`);
-					}
-				});
-			}
-		})
-		.catch((err) => res.send(err));
-});
+		const result = await pool.request()
+				.input('playerName', data.playerName)
+				.input('ones', data.ones)
+				.input('twos', data.twos)
+				.input('threes', data.threes)
+				.input('fours', data.fours)
+				.input('fives', data.fives)
+				.input('sixes', data.sixes)
+				.input('threeKind', data.threeKind)
+				.input('fourKind', data.fourKind)
+				.input('fullHouse', data.fullHouse)
+				.input('shortStraight', data.shortStraight)
+				.input('longStraight', data.longStraight)
+				.input('chance', data.chance)
+				.input('yahtzee', data.yahtzee)
+				.input('yahtzeeBonus', data.yahtzeeBonus)
+				.input('bonus', data.bonus)
+				.input('topSubTotal', data.topSubTotal)
+				.input('topTotal', data.topTotal)
+				.input('bottomTotal', data.bottomTotal)
+				.input('grandTotal', data.grandTotal)
+				.input('datePlayed', datePlayed)
+				.query(`
+					INSERT INTO scores (
+						playerName, ones, twos, threes, fours, fives, sixes, 
+						threeKind, fourKind, fullHouse, shortStraight, 
+						longStraight, chance, yahtzee, yahtzeeBonus, bonus, 
+						topSubTotal, topTotal, bottomTotal, grandTotal, datePlayed
+					) VALUES (
+						@playerName, @ones, @twos, @threes, @fours, @fives, @sixes, 
+						@threeKind, @fourKind, @fullHouse, @shortStraight, 
+						@longStraight, @chance, @yahtzee, @yahtzeeBonus, @bonus, 
+						@topSubTotal, @topTotal, @bottomTotal, @grandTotal, @datePlayed
+					)
+				`);
+			res.status(200).json({ message: 'Score saved successfully!' });
 
-app.get('/scores', (req, res) => {
-	Score.find({}).select('username score').then((score) => res.json(score)).catch((err) => res.send(err));
-});
-
-app.get('/scores/:user', (req, res) => {
-	Score.findOne({ username: req.params.user })
-		.select('username score')
-		.then((score) => res.json(score))
-		.catch((err) => res.send(err));
-});
-
-app.delete('/scores/:id', (req, res) => {
-	Score.findByIdAndDelete(req.params.id)
-		.then(() => res.send(`Successfully deleted ${req.params.id} from database`))
-		.catch((err) => res.send(err));
-});
-*/
+	} catch (error) {
+		console.error('Error saving score:', error);
+		res.status(500).json({ error: 'Failed to save score.' });
+	}
+})
 
 /* Server listening */
 app.listen(PORT, () => {

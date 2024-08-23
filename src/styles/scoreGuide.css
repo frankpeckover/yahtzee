@@ -1,0 +1,20 @@
+.score-guide {
+	display: grid;
+	height: 100%;
+	grid-template-rows: repeat(19, 1fr);
+	align-items: center;
+	white-space: nowrap;
+	margin-top: var(--name-input-height);
+}
+
+.score-guide > * {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+label {
+	padding-right: 10%;
+	height: 35px;
+	color: var(--colour-text);
+}

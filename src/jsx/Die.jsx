@@ -1,5 +1,5 @@
 import React from 'react';
-import './die.css';
+import '../styles/die.css';
 
 const Die = (props) => (
 	<div
