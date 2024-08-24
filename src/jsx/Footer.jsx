@@ -119,7 +119,7 @@ export default class Footer extends React.Component {
 				</div>
 				<p className="center">
 					<FontAwesomeIcon icon={faCopyright} />
-					Website by Amalgam 2020. All rights reserved
+					Website by Francis Peckover 2020. All rights reserved
 				</p>
 			</div>
 		);
