@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/player.css';
 import '../styles/yahtzee.css';
+import SignInModal from './SignInModal';
 
 export default class Player extends React.Component {
 
@@ -39,12 +40,10 @@ export default class Player extends React.Component {
 						
 			bottomTotal: 0,
 			
-			grandTotal: 0
-		};
-	}
+			grandTotal: 0,
 
-	stringifyState = () => {
-		return JSON.stringify(this.state);
+			isModalVisible: false
+		};
 	}
 
 	handleValueChange = (event) => {
@@ -139,19 +138,6 @@ export default class Player extends React.Component {
 		});
 	};
 
-	handleTextChange = (event) => {
-		this.setState({ playerName: event.target.value });
-	};
-
-	toggleNameChange = () => {
-		if (this.state.playerName === '') {
-			return;
-		}
-		this.setState({
-			nameSubmit: !this.state.nameSubmit
-		});
-	};
-
 	handleDoubleClick = (event) => {
 		let target = event.target;
 		target.style.background = 'black';
@@ -162,26 +148,37 @@ export default class Player extends React.Component {
 		}
 	};
 
+	handleLogin = (name) => {
+		this.setState({ playerName: name })
+		this.toggleSignInModal();
+	}
+
+	toggleSignInModal = () => {
+        this.setState((prevState) => ({
+            isModalVisible: !prevState.isModalVisible,
+        }));
+    };
+
 	render() {
 		return (
 			<div className="player">
+				<SignInModal 
+					visible={this.state.isModalVisible} 
+					id={`modal ${this.props.index}`} 
+					index={this.props.index} 
+					onLogin={this.handleLogin} 
+					onToggleSignInModal={this.toggleSignInModal}/>
 				<div id="nameField" className="fill center name-input-div">
-					{this.state.nameSubmit ? (
-						<h2 style={{ paddingBottom: '1%' }} onClick={this.toggleNameChange}>
-							{this.state.playerName.toUpperCase()}
-						</h2>
-					) : (
+					{this.state.playerName === '' ? (
 						<div className="fill center">
-							<input
-								onChange={this.handleTextChange}
-								className="name-input"
-								type="text"
-								placeholder="Player name..."
-							/>
-							<button onClick={this.toggleNameChange} className="name-button">
-								OK
-							</button>
-						</div>
+							<button onClick={this.toggleSignInModal} className="name-button">
+							SET NAME
+						</button>
+					</div>
+					) : (
+						<h2 style={{ paddingBottom: '1%' }}>
+						{this.state.playerName}
+						</h2>
 					)}
 				</div>
 				<div className="scores">

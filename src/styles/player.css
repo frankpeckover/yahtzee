@@ -4,6 +4,7 @@
 	min-width: 200px;
 	margin-right: 10px;
 	z-index: 1;
+	position: relative;
 }
 
 .scores {
@@ -78,7 +79,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .name-button {
-	width: 20%;
+	width: 100%;
 	height: 100%;
 	background: none;
 	border: 1px solid var(--colour-secondary);

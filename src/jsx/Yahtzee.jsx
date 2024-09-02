@@ -69,7 +69,7 @@ export default class Yahtzee extends React.Component {
 				<div className="fill align-top" style={{ padding: '1%' }}>
 					<ScoreGuide />
 					{this.state.players.map((ref, index) => (
-						<Player key={index} ref={ref} />
+						<Player index={index} key={index} ref={ref} />
 					))}
 					<div className="column player-buttons" style={{ padding: '1%' }}>
 						<button className="player-control-button" onClick={this.addPlayer}>
