@@ -9,8 +9,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[scores](
+	[scoreID] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[gameID] [int] NOT NULL,
-	[username] [VarChar](64) NOT NULL,
+	[userID] [int] NULL,
+	[playerName] [varchar](64) NULL,
 	[ones] [int] NULL,
 	[twos] [int] NULL,
 	[threes] [int] NULL,
@@ -30,10 +32,7 @@ CREATE TABLE [dbo].[scores](
 	[chance] [int] NULL,
 	[bottomTotal] [int] NULL,
 	[grandTotal] [int] NULL,
-	[datePlayed] [datetime] NULL,
-	CONSTRAINT PK_Scores PRIMARY KEY (gameID, username),
-	CONSTRAINT FK_Scores_Users FOREIGN KEY (username) REFERENCES [dbo].[users](username)
+	FOREIGN KEY (gameID) REFERENCES [dbo].[games](gameID),
+    FOREIGN KEY (userID) REFERENCES [dbo].[users](userID)
 ) ON [PRIMARY]
 GO
-
-

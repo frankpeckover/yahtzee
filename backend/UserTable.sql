@@ -9,8 +9,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[users](
-	[username] [varchar](64) NOT NULL PRIMARY KEY,
-	[password] [varchar](256) NOT NULL
+	[userID] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY, 
+	[username] [varchar](64) UNIQUE NOT NULL,
+	[password] [varchar](256) NOT NULL,
+	[dateCreated] [datetime] NULL
 ) ON [PRIMARY]
 GO
 

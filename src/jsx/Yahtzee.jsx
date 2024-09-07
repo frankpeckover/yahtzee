@@ -3,7 +3,7 @@ import '../styles/yahtzee.css';
 import Player from './Player';
 import ScoreGuide from './ScoreGuide';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faSync, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Footer from './Footer';
 
 export default class Yahtzee extends React.Component {
@@ -15,14 +15,14 @@ export default class Yahtzee extends React.Component {
 	}
 
 	//this actually needs to be on the client side
-	submitScore = (state) => {
-		fetch('/save-score', {
+	saveGame = (states) => {
+		fetch('/save-game', {
 			method: 'POST',
 			headers: {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(state)
+			body: JSON.stringify(states)
 		})
 		.then(response => response.json())
 		.then(data => console.log(data))
@@ -30,14 +30,19 @@ export default class Yahtzee extends React.Component {
 	}
 
 	submitAllScores = () => {
+		let states = [];
 		this.state.players.forEach(playerRef => {
-			this.submitScore(playerRef.current.state)
+			states.push(playerRef.current.state)
 		});
+		this.saveGame(states)
+		//console.log(`States for saving: ${states}`)
 	}
 
 	clearPlayers = () => {
-		this.setState({
-			players: [0, 1, 2].map(id => React.createRef()), // Reset refs for 3 players
+		// Clear all players first
+		this.setState({ players: [] }, () => {
+			// Optionally, add initial players after clearing
+			this.setState({ players: [0, 1, 2].map(id => React.createRef()) });
 		});
 	}
 
@@ -47,6 +52,7 @@ export default class Yahtzee extends React.Component {
 				players: [...prevState.players, React.createRef()]
 			}));
 		}
+		//console.log(`Added player: ${this.state.players}`)
 	};
 
 	removePlayer = () => {
@@ -55,6 +61,7 @@ export default class Yahtzee extends React.Component {
 				players: prevState.players.slice(0, -1)
 			}));
 		}
+		//console.log(`Removed player: ${this.state.players}`)
 	};
 
 	render() {
@@ -78,10 +85,10 @@ export default class Yahtzee extends React.Component {
 						<button className="player-control-button" onClick={this.removePlayer}>
 							<FontAwesomeIcon icon={faMinus} />
 						</button>
-						<button className="player-control-button" onClick={() => {
-							this.submitAllScores();
-							this.clearPlayers();
-							}}>
+						<button className="player-control-button" onClick={this.submitAllScores}>
+							<FontAwesomeIcon icon={faUpload} />
+						</button>
+						<button className="player-control-button" onClick={this.clearPlayers}>
 							<FontAwesomeIcon icon={faSync} />
 						</button>
 					</div>

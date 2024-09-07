@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/yahtzee.css';
 import '../styles/modal.css';
+import AuthenticationForm from './AuthenticationForm';
 
 const AuthenticationMode = {
     REGISTER: 'register',
@@ -38,10 +39,10 @@ export default class SignInModal extends React.Component {
             if (obj) {
                 if (obj.status === 200)
                 {
-                    this.props.onLogin(obj.body.username)
+                    this.props.onLogin(obj.body.userID, obj.body.username)
                 }
                 console.log(`${obj.body.message}`)
-                //Set a message popup here with obj.body.message
+                this.timeMessageText(obj.body.message)
             }
         })
 		.catch(error => console.error('Error:', error));
@@ -49,7 +50,7 @@ export default class SignInModal extends React.Component {
 
     submitGuest = (e) => {
         e.preventDefault();
-        this.props.onLogin(this.state.username)
+        this.props.onLogin(1, this.state.username)
     }
 
     handleInputChange = (e) => {
@@ -57,70 +58,13 @@ export default class SignInModal extends React.Component {
 		this.setState({ [name]: value });
 	}    
 
-    renderSwitch = (authenticationMode) => {
-        switch (authenticationMode) {
-            case AuthenticationMode.LOGIN:
-                return (
-                <form onSubmit={this.submitLogIn}>
-                    <input 
-                        type='text' 
-                        name='username'
-                        id={`username_${this.props.index}`}
-                        value={this.state.username} 
-                        placeholder='Username'
-                        onChange={this.handleInputChange}>
-                    </input>
-                    <input 
-                        type='password' 
-                        name='password'
-                        id={`password_${this.props.index}`}
-                        value={this.state.password}
-                        onChange={this.handleInputChange}>
-                    </input>
-                    <button type='submit'>{ (this.state.authenticationMode).toUpperCase() }</button>
-                </form>
-                )
-                break;
-            case AuthenticationMode.REGISTER:
-                return (
-                <form onSubmit={this.submitLogIn}>
-                    <input 
-                        type='text' 
-                        name='username'
-                        id={`username_${this.props.index}`}
-                        value={this.state.username} 
-                        placeholder='Username'
-                        onChange={this.handleInputChange}>
-                    </input>
-                    <input 
-                        type='password' 
-                        name='password'
-                        id={`password_${this.props.index}`}
-                        value={this.state.password}
-                        onChange={this.handleInputChange}>
-                    </input>
-                    <button type='submit'>{ (this.state.authenticationMode).toUpperCase() }</button>
-                </form>
-                )
-                break;
-            case AuthenticationMode.GUEST:
-                return (
-                <form id={"authentication-form"} onSubmit={this.submitGuest}>
-                    <input 
-                        type='text' 
-                        name='username'
-                        id={`username_${this.props.index}`} 
-                        value={this.state.username} 
-                        placeholder='Guest Name'
-                        onChange={this.handleInputChange}>
-                    </input>
-                    <button type='submit'>{ (this.state.authenticationMode).toUpperCase() }</button>
-                    </form>
-                )
-                break;
-            default:
-                break;
-        } 
+    timeMessageText = (message) => {
+        var text = document.getElementById('message');
+        text.innerHTML = message
+        text.style.display = 'block'
+        setTimeout(() => {
+            text.style.display = 'none'
+        }, 3000)
     }
 
     render() {
@@ -128,6 +72,9 @@ export default class SignInModal extends React.Component {
 			<div 
                 style={{ display: this.props.visible ? 'block' : 'none' }} 
                 className='signin-modal'>
+                <h3 id={`message`} style={{ color: 'red', fontSize: '0.75em', display: 'none' }}>
+                    MESSAGE HERE
+                </h3>
                 <div>
                     <button  
                         style={{ fontSize: '0.75em' }}
@@ -142,7 +89,14 @@ export default class SignInModal extends React.Component {
                         onClick={ () => this.setState({ authenticationMode: AuthenticationMode.GUEST }) }>
                         GUEST</button>
                 </div>
-                { this.renderSwitch(this.state.authenticationMode) }          
+                <AuthenticationForm 
+                    passwordRequired={ this.state.authenticationMode == AuthenticationMode.GUEST ? false : true } 
+                    authenticationMode={this.state.authenticationMode}
+                    index={this.props.index}
+                    username={this.state.username}
+                    password={this.state.password}
+                    handleInputChange={this.handleInputChange}
+                    submitLogIn={ this.state.authenticationMode == AuthenticationMode.GUEST ? this.submitGuest : this.submitLogIn }/>         
             </div>
 		);
 	}

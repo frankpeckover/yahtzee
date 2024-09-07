@@ -24,41 +24,37 @@ hashString = (string) => {
 }
 
 app.get('/scores', async (req, res) => {
-	const pool = await database.poolPromise;
-	const result = await pool.query(`select * from scores`)
-	res.send(JSON.stringify(result.recordset))
+	result = await database.getScores();
+	res.send(JSON.stringify(result))
 })
 
 app.post('/login', async (req, res) => {
 	try {
-		const pool = await database.poolPromise;
-		data = req.body
-		
-		var hashedpassword = hashString(data.password)
+		var username = req.body.username
+		var hashedPassword = hashString(req.body.password)
 
-		const result = await pool.request()
-		.input('username', data.username)
-		.query(`SELECT * FROM users WHERE username = @username`);
+		users = await database.getUser(username)
 
-		if (result.recordset.length <= 0) {
+		if (users.length <= 0) {
 			console.log("No user found")
 			return res.status(404).send({ 
 				message: "No User Found" 
 			})
 		}
 
-		if (result.recordset[0].password != hashedpassword) {
-			console.log(`Incorrect password: ${result.recordset[0].password} != ${hashedpassword}`)
+		if (users[0].password != hashedPassword) {
+			console.log(`Incorrect password: ${users[0].password} != ${hashedPassword}`)
 			return res.status(401).send({ 
 				message: "Incorrect Password" 
 			})
 		}
 		
-		if (result.recordset[0].password == hashedpassword) {
+		if (users[0].password == hashedPassword) {
 			console.log(`Login successful`)
 			return res.status(200).send({ 
 				message: `Login Successful`, 
-				username: data.username 
+				username: username,
+				userID: users[0].userID
 			})
 		}
 	}
@@ -72,47 +68,30 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
 	try {
-		const pool = await database.poolPromise;
-		data = req.body
+		var username = req.body.username
+		var hashedPassword = hashString(req.body.password)
 
-		var hashedpassword = hashString(data.password)
+		users = await database.getUser(username)
+		console.log(users)
+		
 
-		const result = await pool.request()
-		.input('username', database.sql.VarChar, data.username)
-		.query(`SELECT * FROM users WHERE username = @username`);
-
-		if (result.recordset.length >= 1) {
+		if (users.length >= 1) {
 			return res.status(401).send({ 
 				message: `User Already Exists`, 
-				username: data.username
+				username: username
 			})
 		}
 
-		if (result.recordset.length === 0) {
-			try {
-				console.log("No users found, registering...")
-				const result = await pool.request()
-					.input('username', data.username)
-					.input('password', hashedpassword)
-					.query(`
-						INSERT INTO users (
-							username, password
-						) VALUES (
-							@username, @password
-						)
-					`);
-					console.log(`Registration successful`)
-					return res.status(200).send({ 					
-						message: `Resgistration Successful`, 
-						username: data.username 
-					})
-			}
-			catch (err) {
-				console.error('Registration SQL Error: ', err)
-				return res.status(500).json({ 
-					message: "SQL Server Error" 
-				});
-			}
+		if (users.length === 0) {
+			console.log("No users found, registering...")
+
+			database.addUser(username, hashedPassword)
+
+			console.log(`Registration successful`)
+			return res.status(200).send({ 					
+				message: `Resgistration Successful`, 
+				username: username 
+			})
 		}
 	}
 	catch (err) {
@@ -123,55 +102,26 @@ app.post('/register', async (req, res) => {
 	}
 })
 
-app.post('/save-score', async (req, res) => {
+app.post('/save-game', async (req, res) => {
 	try {
-		const pool = await database.poolPromise;
 		data = req.body
-		const datePlayed = new Date().toISOString();
 
-		const result = await pool.request()
-				.input('playerName', data.playerName)
-				.input('ones', data.ones)
-				.input('twos', data.twos)
-				.input('threes', data.threes)
-				.input('fours', data.fours)
-				.input('fives', data.fives)
-				.input('sixes', data.sixes)
-				.input('threeKind', data.threeKind)
-				.input('fourKind', data.fourKind)
-				.input('fullHouse', data.fullHouse)
-				.input('shortStraight', data.shortStraight)
-				.input('longStraight', data.longStraight)
-				.input('chance', data.chance)
-				.input('yahtzee', data.yahtzee)
-				.input('yahtzeeBonus', data.yahtzeeBonus)
-				.input('bonus', data.bonus)
-				.input('topSubTotal', data.topSubTotal)
-				.input('topTotal', data.topTotal)
-				.input('bottomTotal', data.bottomTotal)
-				.input('grandTotal', data.grandTotal)
-				.input('datePlayed', datePlayed)
-				.query(`
-					INSERT INTO scores (
-						playerName, ones, twos, threes, fours, fives, sixes, 
-						threeKind, fourKind, fullHouse, shortStraight, 
-						longStraight, chance, yahtzee, yahtzeeBonus, bonus, 
-						topSubTotal, topTotal, bottomTotal, grandTotal, datePlayed
-					) VALUES (
-						@playerName, @ones, @twos, @threes, @fours, @fives, @sixes, 
-						@threeKind, @fourKind, @fullHouse, @shortStraight, 
-						@longStraight, @chance, @yahtzee, @yahtzeeBonus, @bonus, 
-						@topSubTotal, @topTotal, @bottomTotal, @grandTotal, @datePlayed
-					)
-				`);
-			res.status(200).json({ 
-				message: 'Score saved successfully!' 
-			});
+		let result = await database.addGame(data.length, 1)
+		let gameID = result[0].gameID
+		let userID = data.userID
 
-	} catch (error) {
-		console.error('Error saving score:', error);
-		res.status(500).json({ 
-			message: 'Failed to save score.' 
+		data.forEach(player => {
+			database.addScore(gameID, player);
+		});
+
+		return res.status(200).json({ 
+			message: "Successully saved results" 
+		});
+	}
+	catch (err) {
+		console.error('Save Error: ', err)
+		return res.status(500).json({ 
+			message: "Internal Server Error, could not save scores" 
 		});
 	}
 })

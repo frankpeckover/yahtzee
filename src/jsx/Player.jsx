@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/player.css';
 import '../styles/yahtzee.css';
 import SignInModal from './SignInModal';
+import { PlayerNumberField } from './PlayerNumberField';
+import { PlayerCheckboxField } from './PlayerCheckboxField';
 
 export default class Player extends React.Component {
 
@@ -17,6 +19,7 @@ export default class Player extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userID: 0,
 			playerName: '',
 			ones: 0,
 			twos: 0,
@@ -42,20 +45,50 @@ export default class Player extends React.Component {
 			
 			grandTotal: 0,
 
-			isModalVisible: false
+			isModalVisible: false,
+			isGuest: false
 		};
+	}
+
+	resetScore = () => {
+		this.setState({
+			ones: 0,
+			twos: 0,
+			threes: 0,
+			fours: 0,
+			fives: 0,
+			sixes: 0,
+
+			bonus: false,
+			topSubTotal: 0,
+			topTotal: 0,
+
+			threeKind: 0,
+			fourKind: 0,
+			fullHouse: false,
+			shortStraight: false,
+			longStraight: false,
+			chance: 0,
+			yahtzee: false,
+			yahtzeeBonus: false,
+						
+			bottomTotal: 0,
+			
+			grandTotal: 0,
+		})
+		//console.log(`Reset state for player: ${this.props.index}`)
 	}
 
 	handleValueChange = (event) => {
 		let target = event.target;
+		
 		let num = 0;
 		if (target.value === '' || target.value === null) {
 			num = 0;
 		} else {
 			num = Math.min(Math.max(parseInt(target.value), 0), parseInt(target.max));
 		}
-		this.setState(
-			{
+		this.setState({
 				[target.name]: num
 			},
 			() => {
@@ -70,8 +103,7 @@ export default class Player extends React.Component {
 	}
 
 	handleCheckbox = (event) => {
-		this.setState(
-			{
+		this.setState({
 				[event.target.name]: !this.state[event.target.name]
 			},
 			this.topSubTotal
@@ -86,8 +118,7 @@ export default class Player extends React.Component {
 			this.state.fours +
 			this.state.fives +
 			this.state.sixes;
-		this.setState(
-			{
+		this.setState({
 				topSubTotal: value
 			},
 			this.bonus
@@ -96,8 +127,7 @@ export default class Player extends React.Component {
 
 	topTotal = () => {
 		let value = this.state.bonus ? this.state.topSubTotal + this.scoreValues.bonus : this.state.topSubTotal;
-		this.setState(
-			{
+		this.setState({
 				topTotal: value
 			},
 			this.bottomTotal
@@ -105,8 +135,7 @@ export default class Player extends React.Component {
 	};
 
 	bonus = () => {
-		this.setState(
-			{
+		this.setState({
 				bonus: this.state.topSubTotal >= 63
 			},
 			this.topTotal
@@ -123,8 +152,7 @@ export default class Player extends React.Component {
 			(this.state.longStraight ? this.scoreValues.longStraight : 0) +
 			(this.state.yahtzee ? this.scoreValues.yahtzee : 0) +
 			(this.state.yahtzeeBonus ? this.scoreValues.yahtzeeBonus : 0);
-		this.setState(
-			{
+		this.setState({
 				bottomTotal: value
 			},
 			this.grandTotal
@@ -138,18 +166,8 @@ export default class Player extends React.Component {
 		});
 	};
 
-	handleDoubleClick = (event) => {
-		let target = event.target;
-		target.style.background = 'black';
-		target.disabled = true;
-
-		if (target.type === 'checkbox') {
-			target.style.opacity = '0';
-		}
-	};
-
-	handleLogin = (name) => {
-		this.setState({ playerName: name })
+	handleLogin = (id, name) => {
+		this.setState({ userID: id, playerName: name })
 		this.toggleSignInModal();
 	}
 
@@ -162,12 +180,14 @@ export default class Player extends React.Component {
 	render() {
 		return (
 			<div className="player">
+
 				<SignInModal 
 					visible={this.state.isModalVisible} 
 					id={`modal ${this.props.index}`} 
 					index={this.props.index} 
 					onLogin={this.handleLogin} 
 					onToggleSignInModal={this.toggleSignInModal}/>
+
 				<div id="nameField" className="fill center name-input-div">
 					{this.state.playerName === '' ? (
 						<div className="fill center">
@@ -181,61 +201,32 @@ export default class Player extends React.Component {
 						</h2>
 					)}
 				</div>
+
 				<div className="scores">
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="ones"
-						placeholder="Ones"
-						min="0"
-						max="5"
-					/>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="twos"
-						placeholder="Twos"
-						min="0"
-						max="10"
-					/>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="threes"
-						placeholder="Threes"
-						min="0"
-						max="15"
-					/>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="fours"
-						placeholder="Fours"
-						min="0"
-						max="20"
-					/>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="fives"
-						placeholder="Fives"
-						min="0"
-						max="25"
-					/>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="sixes"
-						placeholder="Sixes"
-						min="0"
-						max="30"
-					/>
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'ones'} 
+						base={1} />
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'twos'} 
+						base={2} />
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'threes'} 
+						base={3} />
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'fours'} 
+						base={4} />
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'fives'} 
+						base={5} />
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'sixes'} 
+						base={6} />
 					<p className="justify-left">{this.state.topSubTotal}</p>
 					<p className="justify-left">
 						{this.state.bonus ? 'Bonus Achieved!' : `Score too low (${63 - this.state.topSubTotal}) `}
@@ -243,79 +234,44 @@ export default class Player extends React.Component {
 					<p className="justify-left" style={{ borderBottom: '2px solid var(--colour-primary)' }}>
 						{this.state.topTotal}
 					</p>
-
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="threeKind"
-						placeholder="3 of a kind"
-						min="0"
-						max="30"
-					/>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="fourKind"
-						placeholder="4 of a kind"
-						min="0"
-						max="30"
-					/>
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'threeKind'} 
+						placeholder={'Three of a Kind'}
+						base={6} />
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'fourKind'} 
+						placeholder={'Four of a Kind'}
+						base={6} />
 					<div className="fill justify-left">
-						<input
-							onDoubleClick={this.handleDoubleClick}
-							type="checkbox"
-							onChange={this.handleCheckbox}
-							name="fullHouse"
-						/>
+						<PlayerCheckboxField 
+							name={'fullHouse'}
+							onChange={this.handleCheckbox}/>
 					</div>
 					<div className="fill justify-left">
-						<input
-							onDoubleClick={this.handleDoubleClick}
-							type="checkbox"
-							onChange={this.handleCheckbox}
-							name="shortStraight"
-						/>
-					</div>
-					<div
-						style={this.state.longStraight ? { animation: 'pulse 500ms 5' } : null}
-						className="fill justify-left"
-					>
-						<input
-							onDoubleClick={this.handleDoubleClick}
-							type="checkbox"
-							onChange={this.handleCheckbox}
-							name="longStraight"
-						/>
-					</div>
-					<input
-						onDoubleClick={this.handleDoubleClick}
-						type="number"
-						onChange={this.handleValueChange}
-						name="chance"
-						placeholder="Chance"
-						min="0"
-						max="30"
-					/>
-					<div
-						style={this.state.yahtzee ? { animation: 'shake 500ms 5' } : null}
-						className="fill justify-left"
-					>
-						<input
-							onDoubleClick={this.handleDoubleClick}
-							type="checkbox"
-							onChange={this.handleCheckbox}
-							name="yahtzee"
-						/>
+						<PlayerCheckboxField 
+							name={'shortStraight'}
+							onChange={this.handleCheckbox}/>
 					</div>
 					<div className="fill justify-left">
-						<input
-							onDoubleClick={this.handleDoubleClick}
-							type="checkbox"
-							onChange={this.handleCheckbox}
-							name="yahtzeeBonus"
-						/>
+						<PlayerCheckboxField 
+							name={'longStraight'}
+							onChange={this.handleCheckbox}/>
+					</div>
+					<PlayerNumberField
+						onChange={this.handleValueChange} 
+						name={'chance'}
+						base={6} />
+					<div className="fill justify-left">
+						<PlayerCheckboxField 
+							name={'yahtzee'}
+							onChange={this.handleCheckbox}/>
+					</div>
+					<div className="fill justify-left">
+						<PlayerCheckboxField 
+							name={'yahtzeeBonus'}
+							onChange={this.handleCheckbox}/>
 					</div>
 					<p className="justify-left">{this.state.bottomTotal}</p>
 					<p className="justify-left">{this.state.grandTotal}</p>
