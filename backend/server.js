@@ -67,8 +67,20 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
+
+	passwordRequirements = {
+		length: 6,
+		capital: true,
+		capitalRegex: /[A-Z]/,
+		symbol: true,
+		symbolRegex: /[-!$%@^&*()_+|~=`{}\[\]:";'<>?,.\/]/,
+		number: true,
+		numberRegex: /\d/
+	}
+
 	try {
 		var username = req.body.username
+		var password = req.body.password
 		var hashedPassword = hashString(req.body.password)
 
 		users = await database.getUser(username)
@@ -79,6 +91,30 @@ app.post('/register', async (req, res) => {
 			return res.status(401).send({ 
 				message: `User Already Exists`, 
 				username: username
+			})
+		}
+
+		if (password.length < passwordRequirements.length) {
+			return res.status(403).send({ 
+				message: `Password too short`, 
+			})
+		}
+
+		if (passwordRequirements.symbol && (passwordRequirements.symbolRegex.test(password) == false)) {
+			return res.status(403).send({ 
+				message: `Password must contain a symbol`, 
+			})
+		}
+
+		if (passwordRequirements.number && (passwordRequirements.numberRegex.test(password) == false)) {
+			return res.status(403).send({ 
+				message: `Password must contain a number`, 
+			})
+		}
+
+		if (passwordRequirements.capital && (passwordRequirements.capitalRegex.test(password) == false)) {
+			return res.status(403).send({ 
+				message: `Password must contain a capital letter`, 
 			})
 		}
 
@@ -108,7 +144,6 @@ app.post('/save-game', async (req, res) => {
 
 		let result = await database.addGame(data.length, 1)
 		let gameID = result[0].gameID
-		let userID = data.userID
 
 		data.forEach(player => {
 			database.addScore(gameID, player);
