@@ -16,3 +16,25 @@
     box-sizing: border-box; /* Include padding in width and height */
     text-align: center; /* Center text horizontally */
 }
+
+.game-search-modal {
+    color: var(--colour-accent);
+    width: 100%; /* Adjust as needed */
+    max-width: 500px; /* Optional: Set a max-width for better control */
+    margin: 0 auto; /* Center horizontally */
+    z-index: 1000; /* Ensure it's above other content */
+    position: absolute; /* Overlay the viewport */
+    top: 10%; /* Adjust the vertical positioning */
+    left: 0;
+    right: 0;
+    background-color: white; /* Optional: Add a background color */
+    border: 1px solid #ccc; /* Optional: Add a border */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    padding: 10px; /* Add some padding */
+    box-sizing: border-box; /* Include padding in width and height */
+    text-align: center; /* Center text horizontally */
+}
+
+.game-search-table {
+    width: 100%
+}

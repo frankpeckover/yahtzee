@@ -18,32 +18,34 @@ export default class Player extends React.Component {
 
 	constructor(props) {
 		super(props);
+		const score = props.score || {};
+
 		this.state = {
-			userID: 0,
-			playerName: '',
-			ones: 0,
-			twos: 0,
-			threes: 0,
-			fours: 0,
-			fives: 0,
-			sixes: 0,
+			userID: score.userID || 0,
+			playerName: score.playerName || '',
 
-			bonus: false,
-			topSubTotal: 0,
-			topTotal: 0,
+			ones: score.ones || 0,
+			twos: score.twos || 0,
+			threes: score.threes || 0,
+			fours: score.fours || 0,
+			fives: score.fives || 0,
+			sixes: score.sixes || 0,
 
-			threeKind: 0,
-			fourKind: 0,
-			fullHouse: false,
-			shortStraight: false,
-			longStraight: false,
-			chance: 0,
-			yahtzee: false,
-			yahtzeeBonus: false,
-						
-			bottomTotal: 0,
-			
-			grandTotal: 0,
+			bonus: score.bonus || false,
+			topSubTotal: score.topSubTotal || 0,
+			topTotal: score.topTotal || 0,
+
+			threeKind: score.threeKind || 0,
+			fourKind: score.fourKind || 0,
+			fullHouse: score.fullHouse || false,
+			shortStraight: score.shortStraight || false,
+			longStraight: score.longStraight || false,
+			chance: score.chance || 0,
+			yahtzee: score.yahtzee || false,
+			yahtzeeBonus: score.yahtzeeBonus || false,
+			bottomTotal: score.bottomTotal || 0,
+
+			grandTotal: score.grandTotal || 0,
 
 			isModalVisible: false,
 			isGuest: false
@@ -204,26 +206,32 @@ export default class Player extends React.Component {
 
 				<div className="scores">
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'ones'} 
 						base={1} />
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'twos'} 
 						base={2} />
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'threes'} 
 						base={3} />
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'fours'} 
 						base={4} />
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'fives'} 
 						base={5} />
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'sixes'} 
 						base={6} />
@@ -235,41 +243,49 @@ export default class Player extends React.Component {
 						{this.state.topTotal}
 					</p>
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'threeKind'} 
 						placeholder={'Three of a Kind'}
 						base={6} />
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'fourKind'} 
 						placeholder={'Four of a Kind'}
 						base={6} />
 					<div className="fill justify-left">
 						<PlayerCheckboxField 
+							isPrefilled={this.props.score}
 							name={'fullHouse'}
-							onChange={this.handleCheckbox}/>
+							onChange={this.handleCheckbox} />
 					</div>
 					<div className="fill justify-left">
 						<PlayerCheckboxField 
+							isPrefilled={this.props.score}
 							name={'shortStraight'}
-							onChange={this.handleCheckbox}/>
+							onChange={this.handleCheckbox} />
 					</div>
 					<div className="fill justify-left">
 						<PlayerCheckboxField 
+							isPrefilled={this.props.score}
 							name={'longStraight'}
-							onChange={this.handleCheckbox}/>
+							onChange={this.handleCheckbox} />
 					</div>
 					<PlayerNumberField
+						isPrefilled={this.props.score}
 						onChange={this.handleValueChange} 
 						name={'chance'}
 						base={6} />
 					<div className="fill justify-left">
 						<PlayerCheckboxField 
+							isPrefilled={this.props.score}
 							name={'yahtzee'}
 							onChange={this.handleCheckbox}/>
 					</div>
 					<div className="fill justify-left">
 						<PlayerCheckboxField 
+							isPrefilled={this.props.score}
 							name={'yahtzeeBonus'}
 							onChange={this.handleCheckbox}/>
 					</div>

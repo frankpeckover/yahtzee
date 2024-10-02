@@ -1,6 +1,5 @@
 .score-guide {
 	display: grid;
-	height: 100%;
 	grid-template-rows: repeat(19, 1fr);
 	align-items: center;
 	white-space: nowrap;

@@ -47,15 +47,39 @@ const addUser = async (username, hashedPassword) => {
     return result
 }
 
-const getGame = async (gameID) => {
+const getGameByID = async (gameID) => {
     const connection = await sqlConnect();
     const result = await connection.request()
         .input('gameID', gameID)
         .query(`SELECT * FROM games WHERE gameID = @gameID`);
 
+    //console.log(`Result (getGameByID): ${JSON.stringify(result.recordset)}`)
+    return result.recordset;
+}
+
+const getScoresByGameID = async (gameID) => {
+    const connection = await sqlConnect();
+    const result = await connection.request()
+        .input('gameID', gameID)
+        .query(`SELECT * FROM scores WHERE gameID = @gameID`);
+
+    //console.log(`Result (getScoresByGameID): ${JSON.stringify(result.recordset)}`)
+    return result.recordset;
+}
+
+const getAllGamesByUser = async (username) => {
+    const connection = await sqlConnect();
+    const result = await connection.request()
+        .input('username', username)
+        .query(`SELECT games.gameID, games.numPlayers, games.status, games.dateCreated FROM scores
+            INNER JOIN users ON scores.userID = users.userID
+            INNER JOIN games ON games.gameID = scores.gameID
+            WHERE username = @username`);
+
     //console.log(`Result (getGame): ${JSON.stringify(result.recordset)}`)
     return result.recordset;
 }
+
 
 const addGame = async (numPlayers, status) => {
     const connection = await sqlConnect();
@@ -118,7 +142,7 @@ const addScore = async (gameID, data) => {
     return result
 }
 
-const getScores = async () => {
+const getAllScores = async () => {
     const connection = await sqlConnect();
 	const result = await connection.query(`select * from scores`)
 
@@ -130,8 +154,10 @@ module.exports = {
     sql,
     getUser,
     addUser,
-    getScores,
+    getAllScores,
+    getAllGamesByUser,
+    getScoresByGameID,
     addScore,
-    getGame,
+    getGameByID,
     addGame
 };

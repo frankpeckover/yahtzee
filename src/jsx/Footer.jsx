@@ -5,7 +5,7 @@ import './Rules.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCopyright } from '@fortawesome/free-solid-svg-icons';
 import Rules from './Rules.jsx';
-import { HighScores } from './HighScores.jsx';
+import { HighScoresTable } from './HighScoresTable.jsx';
 
 export default class Footer extends React.Component {
 	constructor() {
@@ -112,7 +112,7 @@ export default class Footer extends React.Component {
 								Unable to retreive scores from database
 							</p>
 						) : (
-							<HighScores scores={this.state.scores} />
+							<HighScoresTable scores={this.state.scores} />
 						)}
 					</div>
 					<Rules />

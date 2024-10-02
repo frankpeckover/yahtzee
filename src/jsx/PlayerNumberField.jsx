@@ -6,7 +6,11 @@ export function PlayerNumberField(props) {
 
     const [isDisabled, setIsDisabled] = useState(false);
 
+    
+
 	return (
+        props.isPrefilled ?
+        <p className='justify-left'>{props.isPrefilled[props.name]}</p> :
 		<input
             style={{ backgroundColor: isDisabled ? 'black' : 'none' }}
             onDoubleClick={() => {setIsDisabled(true) }}

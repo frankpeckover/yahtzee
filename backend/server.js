@@ -24,9 +24,23 @@ hashString = (string) => {
 }
 
 app.get('/scores', async (req, res) => {
-	result = await database.getScores();
+	result = await database.getAllScores();
 	res.send(JSON.stringify(result))
 })
+
+app.get('/games', async (req, res) => {
+    const { username } = req.query;
+    if (username == false) {
+        return res.status(400).json({ message: 'playerID is required' });
+    }
+    try {
+        const result = await database.getAllGamesByUser(username);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 app.post('/login', async (req, res) => {
 	try {
@@ -159,6 +173,21 @@ app.post('/save-game', async (req, res) => {
 			message: "Internal Server Error, could not save scores" 
 		});
 	}
+})
+
+app.get('/game', async (req, res) => {
+	const { gameID } = req.query;
+    if (gameID == false) {
+        return res.status(400).json({ message: 'gameID is required' });
+    }
+    try {
+        const result = await database.getScoresByGameID(gameID);
+		//console.log(result)
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 })
 
 /* Server listening */

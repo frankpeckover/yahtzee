@@ -2,15 +2,17 @@ import React from 'react';
 import '../styles/yahtzee.css';
 import Player from './Player';
 import ScoreGuide from './ScoreGuide';
+import GameSearchModal from './GameSearchModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faSync, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faSync, faUpload, faDownload } from '@fortawesome/free-solid-svg-icons';
 import Footer from './Footer';
 
 export default class Yahtzee extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			players: [0, 1, 2].map(id => React.createRef())
+			players: [0, 1, 2].map(id => React.createRef()),
+			gameSearchModal: false
 		};
 	}
 
@@ -36,6 +38,10 @@ export default class Yahtzee extends React.Component {
 		});
 		this.saveGame(states)
 		//console.log(`States for saving: ${states}`)
+	}
+
+	toggleGameSearch = () => {
+		this.setState({gameSearchModal: !this.state.gameSearchModal})
 	}
 
 	clearPlayers = () => {
@@ -70,13 +76,14 @@ export default class Yahtzee extends React.Component {
 				<div className="blocker">
 					<p className="blocker-text">Error 404: Mobile Display Not Found</p>
 				</div>
+				{this.state.gameSearchModal ? <GameSearchModal /> : null}
 				<div className="title">
 					<h1>Yahtzee Score Sheet</h1>
 				</div>
 				<div className="fill align-top" style={{ padding: '1%' }}>
 					<ScoreGuide />
 					{this.state.players.map((ref, index) => (
-						<Player index={index} key={index} ref={ref} />
+						<Player score={null} index={index} key={index} ref={ref} />
 					))}
 					<div className="column player-buttons" style={{ padding: '1%' }}>
 						<button className="player-control-button" onClick={this.addPlayer}>
@@ -87,6 +94,9 @@ export default class Yahtzee extends React.Component {
 						</button>
 						<button className="player-control-button" onClick={this.submitAllScores}>
 							<FontAwesomeIcon icon={faUpload} />
+						</button>
+						<button className="player-control-button" onClick={this.toggleGameSearch}>
+							<FontAwesomeIcon icon={faDownload} />
 						</button>
 						<button className="player-control-button" onClick={this.clearPlayers}>
 							<FontAwesomeIcon icon={faSync} />

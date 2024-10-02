@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/yahtzee.css';
 import '../styles/footer.css';
 
-export function HighScores(props) {
+export function HighScoresTable(props) {
 	return (
 		<table className="high-score-table">
 			<thead>
