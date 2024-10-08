@@ -12,6 +12,7 @@ export default class Yahtzee extends React.Component {
 		super();
 		this.state = {
 			players: [0, 1, 2].map(id => React.createRef()),
+			hasSaved: false,
 			gameSearchModal: false
 		};
 	}
@@ -32,11 +33,17 @@ export default class Yahtzee extends React.Component {
 	}
 
 	submitAllScores = () => {
+		if (this.state.hasSaved) {
+			console.log('Already saved this game')
+			return;
+		}
+
 		let states = [];
 		this.state.players.forEach(playerRef => {
 			states.push(playerRef.current.state)
 		});
 		this.saveGame(states)
+		this.setState({ hasSaved: true })
 		//console.log(`States for saving: ${states}`)
 	}
 

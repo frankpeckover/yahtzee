@@ -75,7 +75,7 @@ function GameSearchModal() {
         secondaryWindow.document.write(`
         <html>
             <head>
-                <title>My Title</title>
+                <title>Previous Game</title>
                 <link rel="stylesheet" href="http://localhost:82/static/css/main.9b9c421a.chunk.css" />
             </head>
             <body>

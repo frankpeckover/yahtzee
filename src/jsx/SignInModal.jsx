@@ -50,6 +50,11 @@ export default class SignInModal extends React.Component {
 
     submitGuest = (e) => {
         e.preventDefault();
+        if (this.state.username.length > 13)
+        {
+            console.log(`Username contains too many characters`)
+            return;
+        }
         this.props.onLogin(1, this.state.username)
     }
 
