@@ -6,7 +6,7 @@ const database = require('./database.js');
 const crypto = require('crypto');
 
 const app = express();
-const PORT = 82;
+const PORT = 80;
 
 /* middleware */
 app.use(cors());

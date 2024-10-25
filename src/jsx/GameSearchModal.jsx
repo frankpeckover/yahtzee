@@ -22,7 +22,7 @@ function GameSearchModal() {
 
         e.preventDefault();
 
-		fetch(`/games?username=${username}`, {
+		fetch(`games?username=${username}`, {
 			method: 'GET',
 			headers: {
 			  'Accept': 'application/json',
@@ -45,7 +45,7 @@ function GameSearchModal() {
             return
         }
 
-		fetch(`/game?gameID=${gameID}`, {
+		fetch(`game?gameID=${gameID}`, {
 			method: 'GET',
 			headers: {
 			  'Accept': 'application/json',
@@ -70,13 +70,17 @@ function GameSearchModal() {
 
     const displayGame = () => {
         const secondaryWindow = window.open('', '_blank');
+
+        const baseURL = 'francispeckover.duckdns.org/yahtzee'
+        const cssHex = '9b9c421a'
+
         secondaryWindow.document.open();
 
         secondaryWindow.document.write(`
         <html>
             <head>
                 <title>Previous Game</title>
-                <link rel="stylesheet" href="http://localhost:82/static/css/main.9b9c421a.chunk.css" />
+                <link rel="stylesheet" href="http://${baseURL}/static/css/main.${cssHex}.chunk.css" />
             </head>
             <body>
                 <div id="scheduling-grid"></div>

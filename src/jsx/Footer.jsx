@@ -40,7 +40,7 @@ export default class Footer extends React.Component {
 	};
 
 	getScores = () => {
-		const URL = '/scores';
+		const URL = 'scores';
 		fetch(URL)
 			.then(response => response.json())
 			.then(data => { 

@@ -4,7 +4,7 @@ require('dotenv').config()
 // SQL Server configuration
 const config = {
     user: process.env.DB_USER, 
-    password: process.env.DB_PASS,  //This needs to go
+    password: process.env.DB_PASS,
     server: process.env.DB_HOST, 
     database: process.env.DB_NAME, 
     options: {

@@ -22,7 +22,7 @@ export default class SignInModal extends React.Component {
 
 	submitLogIn = (e) => {
         e.preventDefault();
-		fetch(`/${this.state.authenticationMode}`, {
+		fetch(`${this.state.authenticationMode}`, {
 			method: 'POST',
 			headers: {
 			  'Accept': 'application/json',
